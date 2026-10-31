@@ -21,7 +21,7 @@ import '../styles/technologies.css';
                 const isCopy = cycle > 0 || itemIndex >= row.items.length;
                 return (
                   <button type="button" class:list={['technology-logo', { 'technology-logo--backing': technology.backing, 'technology-logo--copy': isCopy }]} aria-label={technology.name} aria-hidden={isCopy ? 'true' : undefined} tabindex={isCopy ? '-1' : undefined}>
-                    <span class="technology-logo-art"><img src={`/technologies/${technology.logo}.svg`} alt="" width="64" height="64" loading="eager" fetchpriority="low" decoding="async" /></span>
+                    <span class="technology-logo-art"><img data-src={`/technologies/${technology.logo}.svg`} alt="" width="64" height="64" loading="eager" fetchpriority="low" decoding="async" /><noscript><img src={`/technologies/${technology.logo}.svg`} alt="" width="64" height="64" loading="lazy" /></noscript></span>
                     <span class="technology-tooltip" aria-hidden="true">{technology.name}</span>
                   </button>
                 );

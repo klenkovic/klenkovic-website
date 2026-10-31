@@ -137,6 +137,20 @@ test('page and dialog fit narrow and wide screens', async ({ page }) => {
       await expect(link).toHaveAttribute('href', target);
       await expect(page.locator(target)).toHaveCount(1);
     }
+    if (width <= 600) {
+      const rows = await navigation.locator('a').evaluateAll(links => links.map(link => Math.round(link.getBoundingClientRect().top)));
+      expect(new Set(rows).size, `Navigation must remain on one line at ${width}px`).toBe(1);
+      const portrait = await page.locator('.portrait-frame').boundingBox();
+      const label = await page.locator('.location-tag').boundingBox();
+      expect(label!.y).toBeGreaterThan(portrait!.y + portrait!.height);
+    }
+    const stamp = await page.locator('.portrait-stamp').boundingBox();
+    const caption = await page.locator('.portrait-caption > span').boundingBox();
+    expect(stamp!.x + stamp!.width).toBeLessThanOrEqual(caption!.x);
+    expect(await page.locator('.site-footer').evaluate(footer => {
+      const copyright = footer.querySelector('p')!.getBoundingClientRect();
+      return [...footer.children].filter(element => element.tagName !== 'P').every(element => element.getBoundingClientRect().bottom <= copyright.top);
+    })).toBe(true);
     const bounds = await page.getByRole('heading', { level: 1 }).boundingBox();
     expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width);
     if (width === 2560) {
@@ -160,5 +174,9 @@ test('static content works without JavaScript', async ({ browser }) => {
   await expect(page.getByAltText('Portrait of Kristijan Lenković')).toBeVisible();
   await expect(page.getByRole('link', { name: 'Request my CV' }).first()).toHaveAttribute('href', '#contact');
   await expect(page.locator('.theme-toggle')).toBeHidden();
+  const logo = page.locator('.technology-logo-art noscript img').first();
+  await logo.scrollIntoViewIfNeeded();
+  await expect(logo).toBeVisible();
+  expect((await logo.boundingBox())!.width).toBeLessThanOrEqual(64);
   await context.close();
 });

@@ -54,7 +54,7 @@ test('the entire section waits for the last logo to decode without changing its 
   release();
   await expect(section).toHaveAttribute('data-logos-ready', 'true');
   await expect(section.locator('.technologies-content')).toBeVisible();
-  expect(await section.locator('img').evaluateAll(images => images.every(image => (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0))).toBe(true);
+  await expect.poll(() => section.locator('img').evaluateAll(images => images.every(image => (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0))).toBe(true);
   expect(await section.evaluate(element => element.getBoundingClientRect().height)).toBe(heightBefore);
 });
 
@@ -103,6 +103,7 @@ test('a failed logo keeps all rows hidden and a retry reveals the complete wall'
 test('hover repeatedly pauses a row, lifts its logo, and reveals its full name', async ({ page, isMobile }) => {
   test.skip(isMobile, 'Touch interaction is checked separately.');
   await page.goto('/');
+  await expect(page.locator('#technologies')).toHaveAttribute('data-logos-ready', 'true');
   const row = page.locator('.technology-row').first();
   await row.scrollIntoViewIfNeeded();
   const index = await row.locator('.technology-logo').evaluateAll(logos => logos.findIndex(logo => {
@@ -154,6 +155,7 @@ test('keyboard users get stable, visible logos and only one copy of each accessi
 test('reduced motion shows static original logos with horizontal browsing', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
+  await expect(page.locator('#technologies')).toHaveAttribute('data-logos-ready', 'true');
   await expect(page.locator('.technologies-motion')).toBeHidden();
   for (const row of await page.locator('.technology-row').all()) {
     await expect(row.locator('.technology-track')).toHaveCSS('animation-name', 'none');
@@ -170,6 +172,7 @@ test('local logos load in both themes and touch reveals a name until dismissed',
   await page.goto('/');
   const section = page.locator('#technologies');
   await section.scrollIntoViewIfNeeded();
+  await expect(section).toHaveAttribute('data-logos-ready', 'true');
   for (const theme of ['light', 'dark']) {
     await page.evaluate(theme => { document.documentElement.dataset.theme = theme; }, theme);
     // Verify every distinct local asset, including logos currently outside the animated viewport.
@@ -194,4 +197,46 @@ test('local logos load in both themes and touch reveals a name until dismissed',
     await page.getByRole('heading', { name: 'Technologies.' }).tap();
     await expect(logo.locator('.technology-tooltip')).toHaveCSS('opacity', '0');
   }
+});
+
+test('small screens retain four or five fully visible logos throughout the loop', async ({ page }) => {
+  for (const width of [320, 360, 390, 430, 600]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/');
+    const section = page.locator('#technologies');
+    await section.scrollIntoViewIfNeeded();
+    await expect(section).toHaveAttribute('data-logos-ready', 'true');
+    const counts = await section.locator('.technology-row').evaluateAll(rows => rows.flatMap(row => {
+      const track = row.querySelector<HTMLElement>('.technology-track')!;
+      const animation = track.getAnimations()[0];
+      animation.pause();
+      const duration = Number(animation.effect!.getTiming().duration);
+      const bounds = row.getBoundingClientRect();
+      return [0, .123, .5, .999].map(fraction => {
+        animation.currentTime = fraction * duration;
+        const images = [...row.querySelectorAll<HTMLImageElement>('img[data-src]')];
+        // Check actual images, not just their containers: SVG intrinsic sizes must not overflow.
+        if (images.some(image => image.getBoundingClientRect().width > 41 || image.getBoundingClientRect().height > 41)) return -1;
+        return images.filter(image => {
+          const rect = image.getBoundingClientRect();
+          return rect.left >= bounds.left + bounds.width * .04 && rect.right <= bounds.right - bounds.width * .04;
+        }).length;
+      });
+    }));
+    expect(Math.min(...counts), `Fully visible logos at ${width}px`).toBeGreaterThanOrEqual(width >= 390 ? 5 : 4);
+  }
+});
+
+test('logo downloads wait for the hero unless the visitor jumps directly to Technologies', async ({ page }) => {
+  let release!: () => void;
+  const heroGate = new Promise<void>(resolve => { release = resolve; });
+  let logoRequests = 0;
+  await page.route('**/_astro/kristijan.*', async route => { await heroGate; await route.continue(); });
+  await page.route('**/technologies/*.svg', async route => { logoRequests++; await route.continue(); });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  expect(logoRequests).toBe(0);
+  await page.locator('#technologies').scrollIntoViewIfNeeded();
+  await expect(page.locator('#technologies')).toHaveAttribute('data-logos-ready', 'true');
+  expect(logoRequests).toBeGreaterThan(0);
+  release();
 });

@@ -1,18 +1,21 @@
 ---
 import '@fontsource-variable/manrope';
 import '@fontsource-variable/dm-sans';
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
+import manropeFont from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
+import manropeExtendedFont from '@fontsource-variable/manrope/files/manrope-latin-ext-wght-normal.woff2?url';
+import bodyFont from '@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url';
 import portrait from '../assets/kristijan.jpg';
 import Icon from '../components/Icon.astro';
 import CvRequest from '../components/CvRequest.astro';
 import Analytics from '../components/Analytics.astro';
 import BrandMark from '../components/BrandMark.astro';
 import Technologies from '../components/Technologies.astro';
-import { technologyLogoPaths } from '../data/technologies';
 import { site, expertise, impact } from '../data/site';
 import '../styles/global.css';
 
 const cvHref = '#contact';
+const portraitSizes = '(max-width: 360px) calc(86vw - 40px), (max-width: 431px) calc(86vw - 50px), (max-width: 600px) 321px, (max-width: 1000px) 40vw, 440px';
 const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage', url: Astro.site?.href, name: site.name, mainEntity: { '@type': 'Person', name: site.name, url: Astro.site?.href, sameAs: site.profiles.map(profile => profile.url), jobTitle: site.role, description: site.description, knowsAbout: ['Software engineering', 'Engineering leadership', 'Software architecture', 'Platform engineering', 'Cloud computing', 'Software supply chain security', 'Secure software delivery', 'AI-assisted development'], homeLocation: { '@type': 'Country', name: 'Croatia' } } };
 ---
 <!doctype html>
@@ -24,7 +27,7 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
     <meta name="theme-color" content="#18171c" />
     <link rel="canonical" href={Astro.site} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    {technologyLogoPaths.map(path => <link rel="preload" as="image" type="image/svg+xml" href={path} fetchpriority="low" />)}
+    {[manropeFont, manropeExtendedFont, bodyFont].map(font => <link rel="preload" as="font" type="font/woff2" href={font} crossorigin="anonymous" />)}
     <meta property="og:type" content="website" />
     <meta property="og:title" content={`${site.name} — ${site.role}`} />
     <meta property="og:description" content={site.description} />
@@ -58,7 +61,7 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
           <a class="nav-link" href="#expertise">Approach</a>
           <a class="nav-link" href="#impact">Experience</a>
           <a class="nav-link" href="#ai">AI</a>
-          <a class="nav-link" href="#technologies">Technologies</a>
+          <a class="nav-link" href="#technologies" aria-label="Technologies"><span class="nav-label-full">Technologies</span><span class="nav-label-short" aria-hidden="true">Tech</span></a>
           <a class="nav-link" href="#contact">Contact</a>
         </nav>
         <div class="header-tools">
@@ -82,17 +85,19 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
 
           </div>
           <div class="portrait-composition">
+            <div class="portrait-visual">
             <div class="orbit orbit-one" aria-hidden="true"></div>
             <div class="orbit orbit-two" aria-hidden="true"></div>
             <div class="portrait-frame" role="img" aria-label="Portrait of Kristijan Lenković; focus to reveal natural colors" tabindex="0">
-              <Image src={portrait} alt="Portrait of Kristijan Lenković" widths={[400, 640, 900]} sizes="(max-width: 600px) 90vw, (max-width: 1000px) 45vw, 440px" format="webp" loading="eager" fetchpriority="high" width={900} height={1125} />
-              <div class="portrait-tint" aria-hidden="true"><Image src={portrait} alt="" widths={[400, 640, 900]} sizes="(max-width: 600px) 90vw, (max-width: 1000px) 45vw, 440px" format="webp" loading="eager" width={900} height={1125} /></div>
+              <Picture src={portrait} alt="Portrait of Kristijan Lenković" widths={[320, 480, 640, 900]} sizes={portraitSizes} formats={['avif', 'webp']} fallbackFormat="webp" loading="eager" fetchpriority="high" width={900} height={1125} />
+              <div class="portrait-tint" aria-hidden="true"><Picture src={portrait} alt="" widths={[320, 480, 640, 900]} sizes={portraitSizes} formats={['avif', 'webp']} fallbackFormat="webp" loading="eager" width={900} height={1125} /></div>
               <div class="portrait-shade" aria-hidden="true"></div>
               <span class="portrait-cross" aria-hidden="true">+</span>
               <div class="portrait-caption"><span>Engineer.<br />Leader.</span><Icon name="diagonal" /></div>
             </div>
-            <div class="location-tag"><Icon name="globe" /><span>BASED IN CROATIA<span class="tag-subline">A global perspective.</span></span></div>
             <div class="portrait-stamp" aria-hidden="true"><BrandMark /></div>
+            </div>
+            <div class="location-tag"><Icon name="globe" /><span>BASED IN CROATIA<span class="tag-subline">A global perspective.</span></span></div>
           </div>
         </section>
 
@@ -127,7 +132,7 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
       </main>
 
       <nav class="profile-links" aria-label="Professional profiles">{site.profiles.map(profile => <a href={profile.url} target="_blank" rel="noopener noreferrer" aria-label={`${site.name} on ${profile.label} (opens in a new tab)`} title={profile.label}><img src={profile.icon} alt="" width="24" height="24" loading="lazy" /></a>)}</nav>
-      <footer class="site-footer"><a href="#" class="footer-name">Kristijan Lenković<span class="accent">.</span></a><p>© {new Date().getFullYear()} Kristijan Lenković. All rights reserved.</p><div class="footer-privacy"><a href="/privacy/">Privacy Policy</a><button type="button" data-analytics-settings hidden>Analytics preferences</button></div><a class="back-top" href="#">Back to top <Icon name="diagonal" /></a></footer>
+      <footer class="site-footer"><a href="#" class="footer-name">Kristijan Lenković<span class="accent">.</span></a><div class="footer-privacy"><a href="/privacy/">Privacy Policy</a><button type="button" data-analytics-settings hidden>Analytics preferences</button></div><a class="back-top" href="#">Back to top <Icon name="diagonal" /></a><p>© {new Date().getFullYear()} Kristijan Lenković. All rights reserved.</p></footer>
     </div>
     <CvRequest />
     <Analytics />

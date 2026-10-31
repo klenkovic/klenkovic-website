@@ -3,12 +3,13 @@ const section = document.querySelector<HTMLElement>('#technologies');
 if (section) {
   const images = [...section.querySelectorAll<HTMLImageElement>('.technology-logo img')];
   const loadError = section.querySelector<HTMLElement>('.technologies-load-error')!;
+  let loading: Promise<void> | undefined;
   const loadLogos = async () => {
     section.setAttribute('aria-busy', 'true');
     loadError.hidden = true;
     try {
       await Promise.all(images.map(image => {
-        if (image.complete && !image.naturalWidth) image.src = image.src;
+        if (!image.getAttribute('src') || (image.complete && !image.naturalWidth)) image.src = image.dataset.src!;
         return image.decode();
       }));
       section.dataset.logosReady = 'true';
@@ -19,8 +20,19 @@ if (section) {
       section.removeAttribute('aria-busy');
     }
   };
-  section.querySelector('[data-retry-logos]')!.addEventListener('click', loadLogos);
-  void loadLogos();
+  const startLoading = () => loading ??= loadLogos();
+  section.querySelector('[data-retry-logos]')!.addEventListener('click', () => {
+    loading = undefined;
+    void startLoading();
+  });
+  // Finish the initial page render before preloading the complete logo wall.
+  // The section stays hidden and paused until every copy has decoded.
+  const preloadAfterHero = () => requestAnimationFrame(() => requestAnimationFrame(() => {
+    if ('requestIdleCallback' in window) window.requestIdleCallback(() => void startLoading(), { timeout: 1200 });
+    else void startLoading();
+  }));
+  if (document.readyState === 'complete') preloadAfterHero();
+  else window.addEventListener('load', preloadAfterHero, { once: true });
   const motionButton = section.querySelector<HTMLButtonElement>('.technologies-motion')!;
   const motionLabel = motionButton.querySelector<HTMLElement>('[data-motion-label]')!;
   const floatingTooltips = 'showPopover' in HTMLElement.prototype;
@@ -47,6 +59,7 @@ if (section) {
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(([entry]) => {
       section.dataset.offscreen = String(!entry.isIntersecting);
+      if (entry.isIntersecting) void startLoading();
     }).observe(section);
   } else {
     section.dataset.offscreen = 'false';

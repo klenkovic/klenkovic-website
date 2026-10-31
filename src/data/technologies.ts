@@ -66,8 +66,3 @@ export const technologyRows = [
     ],
   },
 ];
-
-// Each asset is downloaded once, even though the marquee renders repeated copies.
-export const technologyLogoPaths = [...new Set(
-  technologyRows.flatMap(row => row.items.map(technology => `/technologies/${technology.logo}.svg`)),
-)];

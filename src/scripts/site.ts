@@ -100,7 +100,7 @@ if (dialog && form) {
 
 // Enable the color reveal after decode. CSS smoothly follows hover/focus on desktop,
 // while touch devices reveal on entry. No animation-name changes or restart jumps.
-const portraitImage = document.querySelector<HTMLImageElement>('.portrait-frame > img');
+const portraitImage = document.querySelector<HTMLImageElement>('.portrait-frame > picture img');
 const portraitFrame = document.querySelector<HTMLElement>('.portrait-frame');
 if (portraitImage && portraitFrame) {
   void portraitImage.decode().catch(() => {}).then(() => {
