@@ -1,0 +1,8 @@
+---
+const id = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || '';
+const configured = /^G-[A-Z0-9]+$/.test(id);
+---
+{configured && <aside id="analytics-consent" class="analytics-consent" data-measurement-id={id} aria-label="Analytics preferences" hidden>
+  <p><strong>Optional analytics cookies</strong><br />Allow Google Analytics cookies to measure visits and CV requests? Your form answers are never included. <a href="/privacy/">Privacy Policy</a></p>
+  <div class="consent-actions"><button type="button" data-analytics-choice="denied">Decline</button><button type="button" data-analytics-choice="granted">Accept</button></div>
+</aside>}

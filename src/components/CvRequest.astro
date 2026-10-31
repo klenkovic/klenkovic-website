@@ -1,0 +1,33 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+let endpoint = '';
+try {
+  const url = new URL(site.formEndpoint, Astro.site);
+  if (site.formEndpoint && !url.username && !url.password && !url.search && !url.hash && (url.protocol === 'https:' || (url.protocol === 'http:' && ['localhost', '127.0.0.1'].includes(url.hostname)))) endpoint = url.href;
+} catch {}
+const configured = !!endpoint;
+const challengeUrl = configured ? new URL('challenge', endpoint).href : '';
+---
+<dialog id="cv-dialog" aria-labelledby="cv-title" aria-describedby="cv-description">
+  <div class="dialog-content">
+    <button class="icon-button dialog-close" type="button" aria-label="Close CV request"><Icon name="close" /></button>
+    <h2 id="cv-title">Let’s talk.</h2>
+    <p id="cv-description">Tell me about the role or challenge. I’ll respond personally.</p>
+    <form id="cv-form" action={configured ? endpoint : undefined} method="POST" data-configured={String(configured)}>
+      <div class="form-row">
+        <label>Your name<input name="name" autocomplete="name" required maxlength="100" /></label>
+        <label>Your email<input name="email" type="email" autocomplete="email" required maxlength="200" /></label>
+      </div>
+      <label>Company<input name="company" autocomplete="organization" maxlength="150" /></label>
+      <label>Opportunity<textarea name="message" required maxlength="2000" rows="3"></textarea></label>
+
+      <label class="honeypot" aria-hidden="true">Leave empty<input name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+      {configured && <div class="captcha-container"><altcha-widget name="altcha" configuration={JSON.stringify({ humanInteractionSignature: false })} challenge={challengeUrl} theme="auto" /></div>}
+      <button type="submit" class="button button-primary" disabled={!configured}>Send request <Icon name="diagonal" /></button>
+      <p id="form-status" class="form-status" role="status" aria-live="polite">{!configured ? 'Contact form coming soon.' : ''}</p>
+      <p class="form-note">Your details are used to respond to this request. Your request is sent privately to me. The spam check runs on this site.</p>
+      <noscript><p class="form-note">Enable JavaScript to complete the spam check.</p></noscript>
+    </form>
+  </div>
+</dialog>

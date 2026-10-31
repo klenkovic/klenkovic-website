@@ -1,0 +1,130 @@
+---
+import '@fontsource-variable/manrope';
+import '@fontsource-variable/dm-sans';
+import { Image } from 'astro:assets';
+import portrait from '../assets/kristijan.jpg';
+import Icon from '../components/Icon.astro';
+import CvRequest from '../components/CvRequest.astro';
+import Analytics from '../components/Analytics.astro';
+import BrandMark from '../components/BrandMark.astro';
+import { site, expertise, impact } from '../data/site';
+import '../styles/global.css';
+
+const cvHref = '#contact';
+const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage', url: Astro.site?.href, name: site.name, mainEntity: { '@type': 'Person', name: site.name, url: Astro.site?.href, sameAs: site.profiles.map(profile => profile.url), jobTitle: site.role, description: site.description, knowsAbout: ['Software engineering', 'Engineering leadership', 'Software architecture', 'Platform engineering', 'Cloud computing', 'Software supply chain security', 'Secure software delivery', 'AI-assisted development'], homeLocation: { '@type': 'Country', name: 'Croatia' } } };
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={site.description} />
+    <meta name="theme-color" content="#18171c" />
+    <link rel="canonical" href={Astro.site} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${site.name} — ${site.role}`} />
+    <meta property="og:description" content={site.description} />
+    <meta property="og:url" content={Astro.site} />
+    <meta property="og:image" content={new URL('/social-card.png', Astro.site)} />
+    <meta property="og:image:alt" content="Kristijan Lenković — I deliver software. I grow teams." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>{site.name} — {site.role}</title>
+    <script is:inline>
+      (() => {
+        document.documentElement.classList.add('js');
+        let theme;
+        try { theme = localStorage.getItem('theme'); } catch {}
+        document.documentElement.dataset.theme = theme === 'light' || theme === 'dark'
+          ? theme : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="wordmark" href="#" aria-label="Kristijan Lenković, home"><BrandMark class="brand-mark" /><span>Kristijan<br />Lenković<span class="wordmark-dot">.</span></span></a>
+        <nav class="section-navigation" aria-label="Main navigation">
+          <a class="nav-link" href="#expertise">Approach</a>
+          <a class="nav-link" href="#impact">Experience</a>
+          <a class="nav-link" href="#ai">AI</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </nav>
+        <div class="header-tools">
+          <div class="header-profiles" role="group" aria-label="Professional profiles">{site.profiles.map(profile => <a href={profile.url} target="_blank" rel="noopener noreferrer" aria-label={`${site.name} on ${profile.label} (opens in a new tab)`} title={profile.label}><img src={profile.icon} alt="" width="22" height="22" /></a>)}</div>
+
+          <span class="nav-divider" aria-hidden="true"></span>
+          <button class="icon-button theme-toggle" type="button" aria-label="Switch to light theme" title="Switch theme" hidden><Icon name="sun" class="sun-icon" /><Icon name="moon" class="moon-icon" /></button>
+        </div>
+      </header>
+
+      <main id="main">
+        <section class="hero" aria-labelledby="hero-heading">
+          <div class="hero-copy">
+            <p class="eyebrow hero-eyebrow"><span class="status-dot"></span> SOFTWARE ENGINEERING & LEADERSHIP</p>
+            <h1 id="hero-heading">{site.headline[0]}<br /><span class="impact-word">{site.headline[1]}<svg aria-hidden="true" viewBox="0 0 530 16" preserveAspectRatio="none"><path d="M3 11C130 1 350 2 527 8" /></svg></span></h1>
+            <p class="hero-description">{site.introduction}</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href={cvHref} data-cv-request>Request my CV <span class="button-arrow"><Icon name="diagonal" /></span></a>
+              <a class="quiet-link" href="#expertise">What you gain <Icon name="down" /></a>
+            </div>
+
+          </div>
+          <div class="portrait-composition">
+            <div class="orbit orbit-one" aria-hidden="true"></div>
+            <div class="orbit orbit-two" aria-hidden="true"></div>
+            <div class="portrait-frame" role="img" aria-label="Portrait of Kristijan Lenković; focus to reveal natural colors" tabindex="0">
+              <Image src={portrait} alt="Portrait of Kristijan Lenković" widths={[400, 640, 900]} sizes="(max-width: 600px) 90vw, (max-width: 1000px) 45vw, 440px" format="webp" loading="eager" fetchpriority="high" width={900} height={1125} />
+              <div class="portrait-tint" aria-hidden="true"><Image src={portrait} alt="" widths={[400, 640, 900]} sizes="(max-width: 600px) 90vw, (max-width: 1000px) 45vw, 440px" format="webp" loading="eager" width={900} height={1125} /></div>
+              <div class="portrait-shade" aria-hidden="true"></div>
+              <span class="portrait-cross" aria-hidden="true">+</span>
+              <div class="portrait-caption"><span>Engineer.<br />Leader.</span><Icon name="diagonal" /></div>
+            </div>
+            <div class="location-tag"><Icon name="globe" /><span>BASED IN CROATIA<span class="tag-subline">A global perspective.</span></span></div>
+            <div class="portrait-stamp" aria-hidden="true"><BrandMark /></div>
+          </div>
+        </section>
+
+        <div class="proof-strip" aria-label="Experience at a glance">
+          <div class="proof-intro"><span class="tiny-cross" aria-hidden="true">✳</span><span>Experience behind<br /><strong>the outcomes you need.</strong></span></div>
+          <div class="proof"><span class="proof-value">17<span class="accent">+</span></span><span>years delivering software</span></div>
+          <div class="proof"><span class="proof-value">5 <span class="proof-arrow">→</span> 78</span><span>people in a department I built</span></div>
+          <div class="proof"><span class="proof-value proof-text">Founder</span><span>started and led a software company</span></div>
+        </div>
+
+        <section id="expertise" class="expertise section" aria-labelledby="expertise-heading">
+          <div class="section-marker"><span class="section-number">01 /</span><span class="eyebrow">MY APPROACH. YOUR ADVANTAGE.</span></div>
+          <div class="section-heading-row"><h2 id="expertise-heading">A stronger product.<br /><span class="muted">A stronger team.</span></h2></div>
+          <div class="expertise-grid">
+            {expertise.map(item => <article id={item.id} class:list={['expertise-item', { 'ai-approach': item.id === 'ai' }]}><div class="expertise-top"><Icon name={item.icon} /><span>{item.number}</span></div><h3>{item.title}</h3><p>{item.text}</p><ul class="tags" aria-label={`${item.title} focus areas`}>{item.tags.map(tag => <li>{tag}</li>)}</ul></article>)}
+          </div>
+
+        </section>
+
+        <section id="impact" class="impact section" aria-labelledby="impact-heading">
+          <div class="section-marker"><span class="section-number">02 /</span><h2 id="impact-heading" class="eyebrow">WHAT THAT LOOKS LIKE IN PRACTICE</h2></div>
+          <div class="impact-grid">{impact.map(item => <article><h3>{item.title}</h3><p>{item.result}</p></article>)}</div>
+        </section>
+
+        <section id="contact" class="contact section" aria-labelledby="contact-heading">
+          <div class="contact-orbit" aria-hidden="true"></div>
+          <div class="contact-content"><p class="eyebrow"><span class="status-dot"></span> ENGINEERING & TECHNOLOGY LEADERSHIP</p><h2 id="contact-heading">Bring me your<br />next challenge<span>.</span></h2><div class="contact-bottom"><p class="opportunity-copy">{site.opportunities}</p><a class="button button-primary" href={cvHref} data-cv-request>Request my CV <span class="button-arrow"><Icon name="diagonal" /></span></a></div></div>
+          <BrandMark class="contact-asterisk" />
+        </section>
+      </main>
+
+      <nav class="profile-links" aria-label="Professional profiles">{site.profiles.map(profile => <a href={profile.url} target="_blank" rel="noopener noreferrer" aria-label={`${site.name} on ${profile.label} (opens in a new tab)`} title={profile.label}><img src={profile.icon} alt="" width="24" height="24" loading="lazy" /></a>)}</nav>
+      <footer class="site-footer"><a href="#" class="footer-name">Kristijan Lenković<span class="accent">.</span></a><p>© {new Date().getFullYear()} Kristijan Lenković. All rights reserved.</p><div class="footer-privacy"><a href="/privacy/">Privacy Policy</a><button type="button" data-analytics-settings hidden>Analytics preferences</button></div><a class="back-top" href="#">Back to top <Icon name="diagonal" /></a></footer>
+    </div>
+    <CvRequest />
+    <Analytics />
+    <script src="../scripts/site.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+services:
+  contact:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      HOST: 0.0.0.0
+      DATABASE_PATH: /app/data/contact.sqlite
+    ports:
+      - '127.0.0.1:8787:8787'
+    volumes:
+      - contact-data:/app/data
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+volumes:
+  contact-data:

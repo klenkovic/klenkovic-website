@@ -1,0 +1,47 @@
+name: Website uptime
+
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: website-uptime
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    if: vars.UPTIME_MONITOR_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Check live website
+        id: health
+        continue-on-error: true
+        run: node scripts/check-uptime.mjs
+      - name: Open outage issue or resolve recovery
+        uses: actions/github-script@v7
+        env:
+          HEALTH: ${{ steps.health.outcome }}
+        with:
+          script: |
+            const title = '[Uptime] kristijan.lenkovic.com is unavailable';
+            const params = { owner: context.repo.owner, repo: context.repo.repo };
+            const issues = await github.paginate(github.rest.issues.listForRepo, { ...params, state: 'open', creator: 'github-actions[bot]', per_page: 100 });
+            const outage = issues.find(issue => issue.title === title && !issue.pull_request);
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            if (process.env.HEALTH !== 'success') {
+              if (!outage) await github.rest.issues.create({ ...params, title, body: `The website failed three health-check attempts. Check DNS, TLS, HTTP responses, and page contents.\n\n[View monitoring logs](${runUrl})` });
+              core.setFailed('Website health checks failed.');
+            } else if (outage) {
+              await github.rest.issues.createComment({ ...params, issue_number: outage.number, body: `Website health checks have recovered. [View successful check](${runUrl})` });
+              await github.rest.issues.update({ ...params, issue_number: outage.number, state: 'closed', state_reason: 'completed' });
+            }

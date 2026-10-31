@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+playwright-report/
+test-results/
+.DS_Store
+# Keep the private CV outside the repository and published assets.
+*.pdf
+reports/
+contact-service/data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal

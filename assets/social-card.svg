@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#18171c"/>
+  <g fill="none" stroke="#343c36"><circle cx="1070" cy="315" r="255"/><circle cx="1070" cy="315" r="205"/><path d="M65 100h1070M65 550h1070"/></g>
+  <circle cx="75" cy="61" r="5" fill="#f18383"/>
+  <text x="94" y="67" fill="#a5ada6" font-family="sans-serif" font-size="15" letter-spacing="3">SOFTWARE ENGINEERING &amp; LEADERSHIP</text>
+  <g fill="#f1f2e9" font-family="sans-serif" font-size="79" letter-spacing="-4">
+    <text x="65" y="250">I deliver software.</text>
+    <text x="65" y="350">I grow teams.</text>
+  </g>
+  <path d="M68 375q240-15 480-3" stroke="#f18383" stroke-width="3" fill="none"/>
+  <g transform="translate(947 230) scale(2.2)" fill="none" stroke="#f18383" stroke-width="3"><path d="M10 10v44m0-22L31 10M10 32l21 22M43 10v44h15"/><path d="M6 28h8v8H6z" fill="#f18383" stroke="none"/></g>
+  <text x="65" y="505" fill="#f1f2e9" font-family="sans-serif" font-size="25">Kristijan Lenković</text>
+  <text x="65" y="591" fill="#a5ada6" font-family="sans-serif" font-size="15" letter-spacing="1">kristijan.lenkovic.com</text>
+  <text x="1135" y="591" fill="#a5ada6" font-family="sans-serif" font-size="15" text-anchor="end">Stronger products. Stronger teams.</text>
+</svg>
