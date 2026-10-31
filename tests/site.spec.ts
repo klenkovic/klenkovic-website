@@ -125,14 +125,15 @@ for (const theme of ['dark', 'light'] as const) {
 }
 
 test('page and dialog fit narrow and wide screens', async ({ page }) => {
-  for (const width of [320, 390, 600, 768, 1024, 1440, 1920, 2560]) {
+  for (const width of [320, 390, 600, 768, 900, 901, 1024, 1100, 1101, 1440, 1920, 2560]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     const navigation = page.getByRole('navigation', { name: 'Main navigation' });
-    for (const [name, target] of [['Approach', '#expertise'], ['Experience', '#impact'], ['AI', '#ai'], ['Contact', '#contact']]) {
+    for (const [name, target] of [['Approach', '#expertise'], ['Experience', '#impact'], ['AI', '#ai'], ['Technologies', '#technologies'], ['Contact', '#contact']]) {
       const link = navigation.getByRole('link', { name, exact: true });
       await expect(link).toBeVisible();
+      await expect(link).toBeInViewport({ ratio: 1 });
       await expect(link).toHaveAttribute('href', target);
       await expect(page.locator(target)).toHaveCount(1);
     }

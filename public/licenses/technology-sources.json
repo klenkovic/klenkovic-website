@@ -1,0 +1,268 @@
+{
+  "deviconRevision": "32fe1d3b3f36ad11f90ab94f7db59738139c2bf6",
+  "awsPackage": "https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip",
+  "assets": [
+    {
+      "file": "javascript.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/javascript/javascript-original.svg"
+    },
+    {
+      "file": "typescript.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/typescript/typescript-original.svg"
+    },
+    {
+      "file": "php.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/php/php-original.svg"
+    },
+    {
+      "file": "go.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/go/go-original.svg"
+    },
+    {
+      "file": "rust.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/rust/rust-original.svg"
+    },
+    {
+      "file": "python.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/python/python-original.svg"
+    },
+    {
+      "file": "cplusplus.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/cplusplus/cplusplus-original.svg"
+    },
+    {
+      "file": "java.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/java/java-original.svg"
+    },
+    {
+      "file": "csharp.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/csharp/csharp-original.svg"
+    },
+    {
+      "file": "bash.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/bash/bash-original.svg"
+    },
+    {
+      "file": "react.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/react/react-original.svg"
+    },
+    {
+      "file": "nodejs.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/nodejs/nodejs-original.svg"
+    },
+    {
+      "file": "nextjs.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/nextjs/nextjs-original.svg"
+    },
+    {
+      "file": "graphql.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/graphql/graphql-plain.svg"
+    },
+    {
+      "file": "redux.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/redux/redux-original.svg"
+    },
+    {
+      "file": "express.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/express/express-original.svg"
+    },
+    {
+      "file": "phalcon.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/phalcon/phalcon-original.svg"
+    },
+    {
+      "file": "angular.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/angular/angular-original.svg"
+    },
+    {
+      "file": "dotnetcore.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/dotnetcore/dotnetcore-original.svg"
+    },
+    {
+      "file": "meteor.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/meteor/meteor-original.svg"
+    },
+    {
+      "file": "kubernetes.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/kubernetes/kubernetes-original.svg"
+    },
+    {
+      "file": "docker.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/docker/docker-original.svg"
+    },
+    {
+      "file": "terraform.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/terraform/terraform-original.svg"
+    },
+    {
+      "file": "argocd.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/argocd/argocd-original.svg"
+    },
+    {
+      "file": "gitlab.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/gitlab/gitlab-original.svg"
+    },
+    {
+      "file": "jenkins.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/jenkins/jenkins-original.svg"
+    },
+    {
+      "file": "linux.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/linux/linux-original.svg"
+    },
+    {
+      "file": "nginx.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/nginx/nginx-original.svg"
+    },
+    {
+      "file": "prometheus.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/prometheus/prometheus-original.svg"
+    },
+    {
+      "file": "grafana.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/grafana/grafana-original.svg"
+    },
+    {
+      "file": "git.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/git/git-original.svg"
+    },
+    {
+      "file": "amazonwebservices.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/amazonwebservices/amazonwebservices-original.svg"
+    },
+    {
+      "file": "azure.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/azure/azure-original.svg"
+    },
+    {
+      "file": "googlecloud.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/googlecloud/googlecloud-original.svg"
+    },
+    {
+      "file": "mysql.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/mysql/mysql-original.svg"
+    },
+    {
+      "file": "postgresql.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/postgresql/postgresql-original.svg"
+    },
+    {
+      "file": "mongodb.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/mongodb/mongodb-original.svg"
+    },
+    {
+      "file": "redis.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/redis/redis-original.svg"
+    },
+    {
+      "file": "sqlite.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/sqlite/sqlite-original.svg"
+    },
+    {
+      "file": "microsoftsqlserver.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/microsoftsqlserver/microsoftsqlserver-original.svg"
+    },
+    {
+      "file": "rabbitmq.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/rabbitmq/rabbitmq-original.svg"
+    },
+    {
+      "file": "aws-ec2.svg",
+      "source": "Architecture-Service-Icons_07312026/Arch_Compute/64/Arch_Amazon-EC2_64.svg"
+    },
+    {
+      "file": "aws-s3.svg",
+      "source": "Architecture-Service-Icons_07312026/Arch_Storage/64/Arch_Amazon-Simple-Storage-Service_64.svg"
+    },
+    {
+      "file": "aws-eks.svg",
+      "source": "Architecture-Service-Icons_07312026/Arch_Containers/64/Arch_Amazon-Elastic-Kubernetes-Service_64.svg"
+    },
+    {
+      "file": "aws-lambda.svg",
+      "source": "Architecture-Service-Icons_07312026/Arch_Compute/64/Arch_AWS-Lambda_64.svg"
+    },
+    {
+      "file": "aws-rds.svg",
+      "source": "Architecture-Service-Icons_07312026/Arch_Databases/64/Arch_Amazon-RDS_64.svg"
+    },
+    {
+      "file": "aws-cloudfront.svg",
+      "source": "Architecture-Service-Icons_07312026/Arch_Networking-Content-Delivery/64/Arch_Amazon-CloudFront_64.svg"
+    },
+    {
+      "file": "aws-api-gateway.svg",
+      "source": "Architecture-Service-Icons_07312026/Arch_Networking-Content-Delivery/64/Arch_Amazon-API-Gateway_64.svg"
+    },
+    {
+      "file": "aws-cloudwatch.svg",
+      "source": "Architecture-Service-Icons_07312026/Arch_Management-Tools/64/Arch_Amazon-CloudWatch_64.svg"
+    },
+    {
+      "file": "aws-iam.svg",
+      "source": "Architecture-Service-Icons_07312026/Arch_Security-Identity/64/Arch_AWS-Identity-and-Access-Management_64.svg"
+    },
+    {
+      "file": "aws-sqs.svg",
+      "source": "Architecture-Service-Icons_07312026/Arch_Application-Integration/64/Arch_Amazon-Simple-Queue-Service_64.svg"
+    },
+    {
+      "file": "ansible.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/ansible/ansible-original.svg"
+    },
+    {
+      "file": "vscode.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/vscode/vscode-original.svg"
+    },
+    {
+      "file": "bitbucket.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/bitbucket/bitbucket-original.svg"
+    },
+    {
+      "file": "github.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/github/github-original.svg"
+    },
+    {
+      "file": "jira.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/jira/jira-original.svg"
+    },
+    {
+      "file": "confluence.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/confluence/confluence-original.svg"
+    },
+    {
+      "file": "claudecode.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/claudecode/claudecode-original.svg"
+    },
+    {
+      "file": "codex.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/codex/codex-original.svg"
+    },
+    {
+      "file": "grafana-alloy.svg",
+      "source": "https://raw.githubusercontent.com/grafana/alloy/872d1b44bc37d929fc1d1a8485bec2da2a269808/docs/sources/assets/alloy_icon_orange.svg"
+    },
+    {
+      "file": "bitwarden.svg",
+      "source": "https://raw.githubusercontent.com/bitwarden/brand/a354b22f62a9c5fc52daf1ae28468f8fbcd83d9f/logos/icon.svg"
+    },
+    {
+      "file": "passbolt.svg",
+      "source": "https://raw.githubusercontent.com/passbolt/passbolt_styleguide/e9e4182c787f34f80ea42713e56dcbf21db58d23/src/img/logo/icon-without-badge.svg"
+    },
+    {
+      "file": "aws-global-accelerator.svg",
+      "source": "Architecture-Service-Icons_07312026/Arch_Networking-Content-Delivery/64/Arch_AWS-Global-Accelerator_64.svg"
+    },
+    {
+      "file": "claude.svg",
+      "source": "https://raw.githubusercontent.com/devicons/devicon/32fe1d3b3f36ad11f90ab94f7db59738139c2bf6/icons/claude/claude-original.svg"
+    },
+    {
+      "file": "chatgpt.svg",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.0.0/icons/openai.svg",
+      "license": "CC0-1.0",
+      "brandGuidelines": "https://openai.com/brand/"
+    }
+  ]
+}

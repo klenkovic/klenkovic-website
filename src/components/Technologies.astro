@@ -1,0 +1,38 @@
+---
+import { technologyRows } from '../data/technologies';
+import '../styles/technologies.css';
+---
+<section id="technologies" class="technologies section" aria-labelledby="technologies-heading" data-offscreen="true">
+  <div class="technologies-content">
+  <div class="section-marker"><span class="section-number">03 /</span><span class="eyebrow">THE TOOLS BEHIND THE WORK</span></div>
+  <div class="technologies-heading-row">
+    <h2 id="technologies-heading">Technologies<span class="accent">.</span></h2>
+    <button class="technologies-motion" type="button" aria-pressed="false" hidden>
+      <span class="technologies-motion-icon" aria-hidden="true"></span><span data-motion-label>Pause animation</span>
+    </button>
+  </div>
+  <div class="technologies-wall">
+    {technologyRows.map((row, index) => (
+      <div class="technology-row" role="group" aria-label={row.label} data-direction={index % 2 === 0 ? 'right' : 'left'} style={`--marquee-duration: ${row.items.length * 6.5}s`}>
+        <div class="technology-track">
+          {[0, 1].map(cycle => (
+            <div class:list={['technology-cycle', { 'technology-cycle--repeat': cycle > 0 }]} aria-hidden={cycle > 0 ? 'true' : undefined}>
+              {[...row.items, ...row.items].map((technology, itemIndex) => {
+                const isCopy = cycle > 0 || itemIndex >= row.items.length;
+                return (
+                  <button type="button" class:list={['technology-logo', { 'technology-logo--backing': technology.backing, 'technology-logo--copy': isCopy }]} aria-label={technology.name} aria-hidden={isCopy ? 'true' : undefined} tabindex={isCopy ? '-1' : undefined}>
+                    <span class="technology-logo-art"><img src={`/technologies/${technology.logo}.svg`} alt="" width="64" height="64" loading="eager" fetchpriority="low" decoding="async" /></span>
+                    <span class="technology-tooltip" aria-hidden="true">{technology.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+  </div>
+  <div class="technologies-load-error" role="status" hidden><p>Technologies couldn’t load.</p><button type="button" class="technologies-retry" data-retry-logos>Try again</button></div>
+</section>
+<script src="../scripts/technologies.ts"></script>

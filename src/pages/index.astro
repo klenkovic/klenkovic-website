@@ -7,6 +7,8 @@ import Icon from '../components/Icon.astro';
 import CvRequest from '../components/CvRequest.astro';
 import Analytics from '../components/Analytics.astro';
 import BrandMark from '../components/BrandMark.astro';
+import Technologies from '../components/Technologies.astro';
+import { technologyLogoPaths } from '../data/technologies';
 import { site, expertise, impact } from '../data/site';
 import '../styles/global.css';
 
@@ -22,6 +24,7 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
     <meta name="theme-color" content="#18171c" />
     <link rel="canonical" href={Astro.site} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {technologyLogoPaths.map(path => <link rel="preload" as="image" type="image/svg+xml" href={path} fetchpriority="low" />)}
     <meta property="og:type" content="website" />
     <meta property="og:title" content={`${site.name} — ${site.role}`} />
     <meta property="og:description" content={site.description} />
@@ -55,6 +58,7 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
           <a class="nav-link" href="#expertise">Approach</a>
           <a class="nav-link" href="#impact">Experience</a>
           <a class="nav-link" href="#ai">AI</a>
+          <a class="nav-link" href="#technologies">Technologies</a>
           <a class="nav-link" href="#contact">Contact</a>
         </nav>
         <div class="header-tools">
@@ -112,6 +116,8 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
           <div class="section-marker"><span class="section-number">02 /</span><h2 id="impact-heading" class="eyebrow">WHAT THAT LOOKS LIKE IN PRACTICE</h2></div>
           <div class="impact-grid">{impact.map(item => <article><h3>{item.title}</h3><p>{item.result}</p></article>)}</div>
         </section>
+
+        <Technologies />
 
         <section id="contact" class="contact section" aria-labelledby="contact-heading">
           <div class="contact-orbit" aria-hidden="true"></div>
