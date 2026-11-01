@@ -5,11 +5,11 @@ export default defineConfig({
   testMatch: '**/*.spec.ts',
   fullyParallel: true,
   reporter: 'list',
-  use: { baseURL: 'http://127.0.0.1:4321' },
+  use: { baseURL: 'http://127.0.0.1:4329' },
   webServer: {
-    command: 'npm run build && npm run preview -- --ignore-lock --host 127.0.0.1 --port 4321',
-    url: 'http://127.0.0.1:4321',
-    reuseExistingServer: !process.env.CI,
+    command: 'npm run build && npm run preview -- --ignore-lock --host 127.0.0.1 --port 4329',
+    url: 'http://127.0.0.1:4329',
+    reuseExistingServer: false,
     // Test-only identifier; Google requests are mocked in analytics tests.
     env: { PUBLIC_GA_MEASUREMENT_ID: 'G-TEST12345' },
   },

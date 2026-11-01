@@ -175,7 +175,7 @@ test('page and dialog fit narrow and wide screens', async ({ page }) => {
     await page.goto('/');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     const navigation = page.getByRole('navigation', { name: 'Main navigation' });
-    for (const [name, target] of [['Approach', '#expertise'], ['Experience', '#impact'], ['AI', '#ai'], ['Technologies', '#technologies'], ['Contact', '#contact']]) {
+    for (const [name, target] of [['Approach', '#expertise'], ['Experience', '#impact'], ['AI', '#ai'], ['Tech, Technologies', '#technologies'], ['Contact', '#contact']]) {
       const link = navigation.getByRole('link', { name, exact: true });
       await expect(link).toBeVisible();
       await expect(link).toBeInViewport({ ratio: 1 });
@@ -217,10 +217,10 @@ test('page and dialog fit narrow and wide screens', async ({ page }) => {
   }
 });
 
-test('static content works without JavaScript', async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
+test('static content works without JavaScript', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, baseURL });
   const page = await context.newPage();
-  await page.goto('http://127.0.0.1:4321/');
+  await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await expect(page.getByAltText('Portrait of Kristijan Lenković')).toBeVisible();
   await expect(page.getByRole('link', { name: 'Request my CV' }).first()).toHaveAttribute('href', '#contact');

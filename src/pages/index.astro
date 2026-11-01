@@ -38,7 +38,7 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
     <meta property="og:description" content={site.description} />
     <meta property="og:url" content={Astro.site} />
     <meta property="og:image" content={new URL('/social-card.png', Astro.site)} />
-    <meta property="og:image:alt" content="Kristijan Lenković — I deliver software. I grow teams." />
+    <meta property="og:image:alt" content={`Portrait of ${site.name}, ${site.role} — ${site.headline.join(' ')}`} />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')} />
     <meta property="og:locale" content="en_GB" />
@@ -66,7 +66,7 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
           <a class="nav-link" href="#impact">Experience</a>
           <a class="nav-link" href="#expertise">Approach</a>
           <a class="nav-link" href="#ai">AI</a>
-          <a class="nav-link" href="#technologies" aria-label="Technologies"><span class="nav-label-full">Technologies</span><span class="nav-label-short" aria-hidden="true">Tech</span></a>
+          <a class="nav-link" href="#technologies" aria-label="Tech, Technologies"><span class="nav-label-full">Technologies</span><span class="nav-label-short" aria-hidden="true">Tech</span></a>
           <a class="nav-link" href="#contact">Contact</a>
         </nav>
         <div class="header-tools">

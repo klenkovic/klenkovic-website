@@ -70,6 +70,8 @@ References: [GA4 account/property/stream setup](https://support.google.com/analy
 
 The visual design is implemented directly in Astro and CSS, with a personal geometric KL monogram used in the header, portrait seal, contact section, and favicon. No premade website theme is installed. Shared geometry, typography, and the red/plum palette give the site a consistent identity; global exclusivity of simple shapes cannot be guaranteed.
 
+The homepage's social sharing preview uses `public/social-card.png`, generated from the editable `assets/social-card.svg` and the site portrait. After changing either, regenerate the PNG with `node scripts/social-card.mjs` and keep its text in sync with the homepage and image alt text. Social platforms may cache older previews.
+
 Manrope (headings) and DM Sans (body) are free, open-source fonts under SIL OFL 1.1. They are self-hosted and require no Google Fonts network requests, subscription, or commercial font license purchase. Full copyright and license texts ship in `public/licenses/` and therefore in `dist/licenses/`. See `THIRD_PARTY_NOTICES.md` for provenance.
 
 ## Impact, opportunities, and professional profiles
