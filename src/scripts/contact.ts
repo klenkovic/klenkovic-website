@@ -16,7 +16,7 @@ function loadTurnstile(): Promise<Turnstile> {
     const fail = () => { clearTimeout(timeout); script.remove(); reject(new Error('Spam check unavailable')); };
     const timeout = window.setTimeout(fail, 12000);
     script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-    script.async = true;
+    script.async = false;
     script.onerror = fail;
     script.onload = () => {
       if (!window.turnstile) return fail();
