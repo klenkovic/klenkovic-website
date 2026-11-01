@@ -1,128 +1,36 @@
 # Kristijan Lenković
 
-Static Astro site for kristijan.lenkovic.com. Node.js 24.
+Personal website built with Astro and published at [kristijan.lenkovic.com](https://kristijan.lenkovic.com/). GitHub Pages hosts the site; a Cloudflare Worker handles CV requests using Turnstile and SMTP2GO.
+
+## Getting started
+
+Requires Node.js 24.
 
 ```sh
 npm ci
 npm run dev
+```
+
+Copy `.env.example` to `.env` to configure the optional public settings. The contact form requires the Worker endpoint and Turnstile site key; its recipient and credentials are configured separately as Worker secrets.
+
+## Checks
+
+```sh
 npm run check
 npm run build
 npx playwright install chromium
 npm test
 ```
 
-## Contact Worker — configure before launch
+Pushes to `main` or `master` trigger the GitHub Pages workflow. GitHub Pages must use **GitHub Actions** as its publishing source.
 
-The on-site CV form posts to a Cloudflare Worker, uses Cloudflare Turnstile for spam protection, and sends one plain-text notification through the existing SMTP2GO account to the Zoho mailbox. GitHub Pages continues hosting the static site. No database, server, SMTP connection, or automatic CV delivery is required. Existing Zoho MX records are unaffected.
+## Documentation
 
-See [contact-worker/README.md](contact-worker/README.md) for private configuration, deployment, free-plan limits, real delivery verification, and rollback. Set both `PUBLIC_CONTACT_ENDPOINT` and `PUBLIC_TURNSTILE_SITE_KEY` locally and in GitHub Actions variables, then rebuild. The form stays disabled until both are configured, with LinkedIn available as a fallback. Do not put mail addresses or secret keys in public source or frontend environment variables.
+- [Site maintenance, deployment, analytics and monitoring](docs/maintenance.md)
+- [Contact Worker setup and operation](contact-worker/README.md)
+- [Performance audits](docs/performance.md)
+- [Third-party notices and licenses](THIRD_PARTY_NOTICES.md)
 
-```sh
-npm run test:contact
-npm run contact:check
-npm run build
-npm run test:contact-flow
-```
+## License
 
-Tests mock Cloudflare verification and SMTP2GO delivery; they do not send mail or prove real inbox delivery. The browser flow uses the real Worker handler with those upstreams stubbed. A live delivery and Reply-To test remains required before enabling the form.
-
-## Deploy
-
-Push to GitHub. Select GitHub Actions in Settings → Pages. Set the custom domain to `kristijan.lenkovic.com`, then create a DNS CNAME for `kristijan` pointing to your GitHub account’s `<username>.github.io` hostname. Enable HTTPS once provisioning completes. The workflow builds and publishes `dist/` from `main` or `master`.
-
-## Editing and SEO
-
-Public copy: `src/data/site.ts` and `src/pages/index.astro`. Colors: `src/styles/global.css`. Fonts are self-hosted; the portrait is optimized at build time. The page includes a canonical URL, unique title and description, ProfilePage/Person JSON-LD, Open Graph metadata, a social image, sitemap, robots.txt, semantic headings, and crawlable HTML.
-
-After launch, verify the domain in Google Search Console and submit `https://kristijan.lenkovic.com/sitemap.xml`. Rankings are not guaranteed by technical SEO. Keep profile claims accurate; AI content describes tooling use and exploration rather than inventing AI product delivery experience.
-
-Keep the private CV outside this repository. Never put it in public assets or attach its URL to the frontend.
-
-## Google Analytics 4 — setup
-
-Analytics stays off until a valid `PUBLIC_GA_MEASUREMENT_ID` is configured. No Google script loads before consent. Accept and Decline have equal prominence; visitors can change their choice through the footer. Declining after acceptance clears accessible GA cookies and reloads without the tag. Choices and GA cookie lifetime are set to 180 days.
-
-1. Sign in at https://analytics.google.com/ and create an Analytics account and GA4 property for this website.
-2. Choose a Web data stream with URL `https://kristijan.lenkovic.com` and copy its measurement ID (`G-…`). No API key or Google Tag Manager account is needed.
-3. **Turn off Enhanced Measurement** in the web stream settings. This implementation explicitly sends its own events and cleans page URLs. Automatic form interaction/page-history tracking is unnecessary and can create duplicate events or expose URL details. Keep Google Signals, ads linking, user-provided data collection, and advertising personalization off. Do not add another Analytics snippet through a plugin.
-4. Add `PUBLIC_GA_MEASUREMENT_ID=G-YOURID` to local `.env`, and add the same public identifier as a GitHub repository Actions variable. Rebuild and deploy. Do not use the test ID from the browser test configuration.
-5. Open the live site, accept analytics, and check GA4 Realtime for `page_view`. Open the CV dialog for `cv_request_open`. Submit a valid request after the contact Worker is configured for `generate_lead`. Mark `generate_lead` as a **key event** in GA4; a form open is intent, not a completed lead.
-6. Verify that declining loads no Google tag and that withdrawing consent stops subsequent collection. Browser tests mock Google: receipt by your real GA property still needs this live check. Review the privacy page and choose the appropriate data retention settings before launch.
-
-No form fields or message text are passed to analytics. The URL passed to GA omits query strings/fragments, and the referrer is reduced to its origin. This intentionally sacrifices query-based campaign attribution, including UTM parameters, to avoid accidental personal data collection. Reports cover consenting visitors only; blockers also affect totals. Analytics does not increase search rankings.
-
-References: [GA4 account/property/stream setup](https://support.google.com/analytics/answer/9304153), [basic consent mode](https://developers.google.com/tag-platform/security/guides/consent?consentmode=basic), [recommended lead event](https://support.google.com/analytics/answer/9267735).
-
-## Marketing priorities
-
-- Verify Google Search Console and submit the sitemap after launch; inspect the homepage indexing status.
-- Add the domain to your LinkedIn profile, GitHub profile, CV, and email signature. Add public profile links to this site only after confirming their exact URLs and desired visibility.
-- Add one or two short, approved outcome statements: team development, platform transformation, or improvements to engineering practices. Prefer evidence over more adjectives. No client details or unsupported metrics.
-- Keep one primary conversion: a conversation/CV request. Track successful requests, then judge their quality manually. Traffic volume alone is not the goal.
-- Existing Open Graph image and metadata provide the sharing preview. Check the live preview when sharing.
-- Paid ads, retargeting pixels, pop-ups, session recordings, and a newsletter add little value for this low-maintenance recruiter-focused site.
-
-## Design and font licensing
-
-The visual design is implemented directly in Astro and CSS, with a personal geometric KL monogram used in the header, portrait seal, contact section, and favicon. No premade website theme is installed. Shared geometry, typography, and the red/plum palette give the site a consistent identity; global exclusivity of simple shapes cannot be guaranteed.
-
-The homepage's social sharing preview uses `public/social-card.png`, generated from the editable `assets/social-card.svg` and the site portrait. After changing either, regenerate the PNG with `node scripts/social-card.mjs` and keep its text in sync with the homepage and image alt text. Social platforms may cache older previews.
-
-Manrope (headings) and DM Sans (body) are free, open-source fonts under SIL OFL 1.1. They are self-hosted and require no Google Fonts network requests, subscription, or commercial font license purchase. Full copyright and license texts ship in `public/licenses/` and therefore in `dist/licenses/`. See `THIRD_PARTY_NOTICES.md` for provenance.
-
-## Impact, opportunities, and professional profiles
-
-`src/data/site.ts` contains the compact outcome statements, target opportunities (CTO / Head of Engineering / technology leadership), and LinkedIn/GitHub URLs. Both profile URLs were read from the supplied CV; the LinkedIn URL was also confirmed in chat. Links open in a new tab without passing a referrer, and are included in Person `sameAs` structured data. The target-role line describes relevant opportunities, not a current CTO title or a claim of immediate availability.
-
-## Performance and uptime
-
-See `docs/performance.md` for the local production audit, its limits, reproduction steps, and the live-domain check to perform after launch. Run `npm run audit:performance` after a production build. Reports are saved locally in `reports/performance/` and uploaded by the performance workflow.
-
-The optional `.github/workflows/uptime.yml` checks the homepage, privacy page, favicon, and sitemap around every 15 minutes, with three attempts before reporting an outage. It validates TLS, HTTP status, content type, expected page text, and redirect origin. On failure, it opens one GitHub issue; when checks recover, it comments and closes that issue. No email address or third-party monitoring secret is embedded.
-
-To activate after the domain is live:
-
-1. Push the code to GitHub, enable Issues, and allow the uptime workflow's `issues: write` permission.
-2. Create an Actions repository variable named `UPTIME_MONITOR_ENABLED` with value `true`.
-3. Enable GitHub Actions failure notifications for your account. Watch the repository with issue notifications enabled to receive outage/recovery updates.
-4. Manually run “Website uptime” and verify successful checks and your notification settings. Run `npm run test:uptime` for failure-mode tests; these mock responses and do not create GitHub issues.
-
-Monitoring is **not active** until those steps are completed. GitHub schedules are best-effort, can be delayed, and scheduled workflows in public repositories can be disabled after 60 days without repository activity. This optional workflow is useful initially but does not satisfy decade-long unattended monitoring. For that goal, configure a dedicated external HTTPS monitor for `https://kristijan.lenkovic.com/` with a `Kristijan Lenković` keyword check, an outage email notification, and recovery notifications; that requires a monitoring-service account and its own end-to-end alert test.
-
-References: [GitHub schedule limits](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule), [workflow notifications](https://docs.github.com/en/actions/concepts/workflows-and-actions/notifications-for-workflow-runs).
-
-## Security positioning and portrait loading
-
-Public copy leads with engineering experience and team-building, then backs it with concrete outcomes from the CV. Security and cloud work support the broader engineering story. Avoid standards-heavy positioning and keyword lists. The team-growth figure appears once in the public copy. AI is described as a practical engineering tool, with human review and accountability. Avoid unsupported claims about certifications, vulnerability-free products, or AI product delivery.
-
-The original portrait stays unmodified. Responsive AVIF images use WebP fallback and are requested at high priority. An inline 160×200 WebP preview appears immediately while the selected full-size image loads; it is under 2 KB and needs no additional request. The AVIF preload uses the same responsive candidates and sizes as the picture. If the original portrait changes, regenerate the preview with `node --input-type=module -e "import sharp from 'sharp'; await sharp('src/assets/kristijan.jpg').rotate().resize({width:160,height:200,withoutEnlargement:true}).webp({quality:50}).toFile('src/assets/kristijan-preview.webp')"`. On phones, the name and plain-text Croatia label sit beside a compact portrait above the headline; the globe and global-perspective subline remain on larger screens. GitHub/LinkedIn icons appear in both the header and footer as local SVGs with accessible link labels and retained license notices.
-
-## Readable typography
-
-Text sizes use rem-based, fluid tokens instead of tiny fixed labels. Body text scales from 16px on small screens to 20px at a 2560px-wide viewport. Secondary text is at least 14px and grows toward 16px; navigation, buttons, and form controls use a separate 16–18px scale. The content container expands to 1720px on larger screens. Skill tags wrap, cards reflow, and the decorative vertical portrait text has been removed. Browser checks cover layout through 2560×1440 and enforce the larger high-resolution typography.
-
-## Employer-facing story
-
-The headline establishes delivery and team-building; the introduction positions Kristijan across engineering and IT leadership. Experience figures sit inside the opening copy, before the CV invitation. On phones, a compact portrait, name, and country row introduces Kristijan above the headline; desktop retains the large portrait beside the copy. Selected experience comes next: organizational change, cloud-native transformation, and signed, traceable builds. These short statements are grounded in the private CV and omit employer/client identities, dates, and personal details. The approach cards describe how he leads without repeating the achievements. The closing invitation names Head of Engineering, Head of IT, CTO, and related leadership roles as interests, not current titles. Keep the page concise; the full CV is shared privately on request. Do not publish working-arrangement preferences.
-
-## Section navigation and technical scope
-
-The header links to Experience, Approach, the AI approach card, Technologies, and Contact. All links remain visible on one line on phones, with “Tech” as the compact label for Technologies and section navigation below the identity/social row. Copyright is the last footer item in both DOM and visual order at every width. The employer-facing benefits remain the main message; supporting tags identify cloud platforms, Kubernetes, DevSecOps, CI/CD, and software supply-chain security. “AI, with judgment” describes AI-assisted implementation and testing with human review, decisions, and accountability.
-
-## Technology logo wall
-
-Edit `src/data/technologies.ts` to change the selection and row order. The five rows cover languages/development tools, application engineering/collaboration, platforms/delivery, cloud/data/security, and AWS services. They use CV technologies and user-requested additions, including Claude Code and OpenAI Codex; placement does not indicate proficiency. Add the corresponding local SVG to `public/technologies/` and record its license/source in `THIRD_PARTY_NOTICES.md` and `public/licenses/technology-sources.json`.
-
-Odd rows move right; even rows move left. Hover pauses that row, raises the logo, and shows its full name. A tap holds the name until focus moves away. Keyboard focus switches a row to a stable, horizontally scrollable strip. The pause button stops all rows. Repeated copies are hidden from assistive technology and skipped by Tab. Reduced-motion preferences and visitors without JavaScript get static, horizontally scrollable original logos. Animation pauses while the section is offscreen. Logos keep their brand colors; a small white backing preserves dark marks in both themes.
-
-Rows are compact (104px desktop / 76px mobile). Mobile logos are 40px inside 48px targets with 6px gaps, keeping at least four fully visible on a 320px phone and five at 390px throughout the loop. In browsers with the Popover API, names appear in the top layer to avoid clipping; older browsers retain extra tooltip space.
-
-The full logo collection preloads after the initial page load and two rendering frames, during idle time with a 1200ms timeout. Jumping directly to the section starts it immediately. No logo requests compete with the initial fonts/portrait. The whole section stays hidden and paused until every rendered image has loaded and decoded, including repeated offscreen copies; it keeps its layout space while loading. If an asset fails, no partial wall is shown and a retry control is offered. Visitors without JavaScript get static, lazy-loaded logos through `noscript`. The head preloads the fonts needed for the initial text and Croatian name; the portrait has high fetch priority and logos have low priority.
-
-## Mobile reading flow
-
-Phones use a single CV action in the hero; the secondary experience jump link is reserved for larger screens. The experience section follows without stacking hero padding and section margin. The approach section uses one numbered “My approach.” heading, with icons beside the card titles and no second set of card numbers. The mobile contact card starts with its invitation, omitting the repeated leadership label and decorative monogram. Technology rows and their animation remain unchanged.
-
-## Scroll animation
-
-Experience and approach cards below the initial viewport are prepared for a one-time fade and upward slide as they enter view. Desktop uses 36px of movement over 1,150ms with a 120ms initial delay and up to 320ms of staggering; phones use 28px over 1,000ms with a 100ms delay and no stagger. Cards already visible on load stay visible, and revealed cards do not disappear on scrolling back. The enhancement uses native IntersectionObserver and Web Animations; content stays visible without JavaScript, when reduced motion is preferred, or when printing. A change to reduced motion reveals all pending cards and cancels active animations. Directly targeted or focused cards are shown immediately. The introduction, portrait, CV buttons, and technology wall are unaffected.
+The original project code is available under the [MIT License](LICENSE). Personal content, including the portrait, professional biography and personal branding, is excluded. Third-party assets remain subject to their own licenses and terms; see [third-party notices](THIRD_PARTY_NOTICES.md).

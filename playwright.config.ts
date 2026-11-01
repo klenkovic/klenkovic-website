@@ -7,7 +7,7 @@ export default defineConfig({
   reporter: 'list',
   use: { baseURL: 'http://127.0.0.1:4329' },
   webServer: {
-    command: 'npm run build && npm run preview -- --ignore-lock --host 127.0.0.1 --port 4329',
+    command: 'npm run build && npx astro preview --ignore-lock --host 127.0.0.1 --port 4329',
     url: 'http://127.0.0.1:4329',
     reuseExistingServer: false,
     timeout: 180_000,
