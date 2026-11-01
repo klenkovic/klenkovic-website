@@ -1,11 +1,12 @@
 ---
 import '@fontsource-variable/manrope';
 import '@fontsource-variable/dm-sans';
-import { Picture } from 'astro:assets';
+import { getImage, Picture } from 'astro:assets';
 import manropeFont from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
 import manropeExtendedFont from '@fontsource-variable/manrope/files/manrope-latin-ext-wght-normal.woff2?url';
 import bodyFont from '@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url';
 import portrait from '../assets/kristijan.jpg';
+import portraitPreview from '../assets/kristijan-preview.webp?inline';
 import Icon from '../components/Icon.astro';
 import CvRequest from '../components/CvRequest.astro';
 import Analytics from '../components/Analytics.astro';
@@ -16,8 +17,10 @@ import '../styles/global.css';
 
 const cvHref = '#contact';
 const currentYear = new Date().getFullYear();
-const portraitSizes = '(max-width: 360px) calc(86vw - 40px), (max-width: 431px) calc(86vw - 50px), (max-width: 600px) 321px, (max-width: 1000px) 40vw, 440px';
-const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage', url: Astro.site?.href, name: site.name, mainEntity: { '@type': 'Person', name: site.name, url: Astro.site?.href, sameAs: site.profiles.map(profile => profile.url), jobTitle: site.role, description: site.description, knowsAbout: ['Software engineering', 'Engineering leadership', 'Software architecture', 'Platform engineering', 'Cloud computing', 'Software supply chain security', 'Secure software delivery', 'AI-assisted development'], homeLocation: { '@type': 'Country', name: 'Croatia' } } };
+const portraitSizes = '(max-width: 600px) 82px, (max-width: 1000px) 40vw, 440px';
+const portraitWidths = [160, 320, 480, 640, 900];
+const portraitPreload = await getImage({ src: portrait, format: 'avif', width: 900, height: 1125, widths: portraitWidths });
+const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage', url: Astro.site?.href, name: site.name, mainEntity: { '@type': 'Person', name: site.name, url: Astro.site?.href, sameAs: site.profiles.map(profile => profile.url), jobTitle: site.role, description: site.description, knowsAbout: ['Software engineering', 'Engineering leadership', 'IT leadership', 'Software architecture', 'Platform engineering', 'Cloud computing', 'Software supply chain security', 'Secure software delivery', 'AI-assisted development'], homeLocation: { '@type': 'Country', name: 'Croatia' } } };
 ---
 <!doctype html>
 <html lang="en">
@@ -28,6 +31,7 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
     <meta name="theme-color" content="#18171c" />
     <link rel="canonical" href={Astro.site} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" as="image" type="image/avif" href={portraitPreload.src} imagesrcset={portraitPreload.srcSet.attribute} imagesizes={portraitSizes} fetchpriority="high" />
     {[manropeFont, manropeExtendedFont, bodyFont].map(font => <link rel="preload" as="font" type="font/woff2" href={font} crossorigin="anonymous" />)}
     <meta property="og:type" content="website" />
     <meta property="og:title" content={`${site.name} — ${site.role}`} />
@@ -59,8 +63,8 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
       <header class="site-header">
         <a class="wordmark" href="#" aria-label="Kristijan Lenković, home"><BrandMark class="brand-mark" /><span>Kristijan<br />Lenković<span class="wordmark-dot">.</span></span></a>
         <nav class="section-navigation" aria-label="Main navigation">
-          <a class="nav-link" href="#expertise">Approach</a>
           <a class="nav-link" href="#impact">Experience</a>
+          <a class="nav-link" href="#expertise">Approach</a>
           <a class="nav-link" href="#ai">AI</a>
           <a class="nav-link" href="#technologies" aria-label="Technologies"><span class="nav-label-full">Technologies</span><span class="nav-label-short" aria-hidden="true">Tech</span></a>
           <a class="nav-link" href="#contact">Contact</a>
@@ -86,59 +90,52 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
               <circle class="connection-node" cx="1210" cy="69" r="4" />
             </svg>
           </div>
-          <div class="hero-copy">
-            <p class="eyebrow hero-eyebrow"><span class="status-dot"></span> SOFTWARE ENGINEERING & LEADERSHIP</p>
-            <h1 id="hero-heading">{site.headline[0].slice(0, -1)}<span class="theme-dot">.</span><br /><span class="impact-word">{site.headline[1].slice(0, -1)}<span class="theme-dot">.</span><svg aria-hidden="true" viewBox="0 0 530 16" preserveAspectRatio="none"><path d="M3 11C130 1 350 2 527 8" /></svg></span></h1>
-            <p class="hero-description">{site.introduction}</p>
-            <div class="hero-actions">
-              <a class="button button-primary" href={cvHref} data-cv-request>Request my CV <span class="button-arrow"><Icon name="diagonal" /></span></a>
-              <a class="quiet-link" href="#expertise">What you gain <Icon name="down" /></a>
-            </div>
-
-          </div>
           <div class="portrait-composition">
             <div class="portrait-visual">
-              <div class="portrait-frame">
-                <Picture src={portrait} alt="Portrait of Kristijan Lenković" widths={[320, 480, 640, 900]} sizes={portraitSizes} formats={['avif', 'webp']} fallbackFormat="webp" loading="eager" fetchpriority="high" width={900} height={1125} />
+              <div class="portrait-frame" style={`background-image: url("${portraitPreview}")`}>
+                <Picture src={portrait} alt="Portrait of Kristijan Lenković" widths={portraitWidths} sizes={portraitSizes} formats={['avif', 'webp']} fallbackFormat="webp" loading="eager" fetchpriority="high" width={900} height={1125} />
               </div>
             </div>
             <p class="portrait-name">{site.name}<span class="theme-dot">.</span></p>
-            <div class="location-tag"><Icon name="globe" /><span>BASED IN CROATIA<span class="tag-subline">A global perspective.</span></span></div>
+            <div class="location-tag"><Icon name="globe" /><span><span class="location-country">Based in Croatia</span><span class="tag-subline">A global perspective.</span></span></div>
           </div>
-          <nav class="hero-pathways" aria-label="Explore how I can help">
-            <p class="pathways-intro">What are you<br />building next<span class="theme-dot">?</span></p>
-            <a href="#delivery"><span class="pathway-dot" aria-hidden="true"></span><span><strong>A product that ships<span class="theme-dot">.</span></strong><span class="pathway-detail">From priorities to production</span></span><Icon name="diagonal" /></a>
-            <a href="#leadership"><span class="pathway-dot" aria-hidden="true"></span><span><strong>A team that grows<span class="theme-dot">.</span></strong><span class="pathway-detail">More ownership. Stronger leaders.</span></span><Icon name="diagonal" /></a>
-            <a href="#platforms"><span class="pathway-dot" aria-hidden="true"></span><span><strong>A platform you trust<span class="theme-dot">.</span></strong><span class="pathway-detail">Secure foundations for what’s next</span></span><Icon name="diagonal" /></a>
-          </nav>
+          <div class="hero-copy">
+            <p class="eyebrow hero-eyebrow"><span class="status-dot"></span> ENGINEERING & IT LEADERSHIP</p>
+            <h1 id="hero-heading">{site.headline[0].slice(0, -1)}<span class="theme-dot">.</span><br /><span class="impact-word">{site.headline[1].slice(0, -1)}<span class="theme-dot">.</span><svg aria-hidden="true" viewBox="0 0 530 16" preserveAspectRatio="none"><path d="M3 11C130 1 350 2 527 8" /></svg></span></h1>
+            <p class="hero-description">{site.introduction}</p>
+            <div class="proof-strip" aria-label="Experience at a glance">
+              <div class="proof"><span class="proof-value"><span data-current-year data-year-offset={site.careerStartYear}>{currentYear - site.careerStartYear}</span><span class="accent">+</span></span><span>years delivering software</span></div>
+              <div class="proof"><span class="proof-value">5 <span class="proof-arrow">→</span> 78</span><span>people in a department I grew</span></div>
+              <div class="proof"><span class="proof-value proof-text">Founder</span><span>started and led a software company</span></div>
+            </div>
+            <div class="hero-actions">
+              <a class="button button-primary" href={cvHref} data-cv-request>Request my CV <span class="button-arrow"><Icon name="diagonal" /></span></a>
+              <a class="quiet-link" href="#impact">Selected experience <Icon name="down" /></a>
+            </div>
+
+          </div>
+
         </section>
 
-        <div class="proof-strip" aria-label="Experience at a glance">
-          <div class="proof-intro"><span class="tiny-cross" aria-hidden="true">✳</span><span>Experience behind<br /><strong>the outcomes you need.</strong></span></div>
-          <div class="proof"><span class="proof-value"><span data-current-year data-year-offset={site.careerStartYear}>{currentYear - site.careerStartYear}</span><span class="accent">+</span></span><span>years delivering software</span></div>
-          <div class="proof"><span class="proof-value">5 <span class="proof-arrow">→</span> 78</span><span>people in a department I built</span></div>
-          <div class="proof"><span class="proof-value proof-text">Founder</span><span>started and led a software company</span></div>
-        </div>
+        <section id="impact" class="impact section" aria-labelledby="impact-heading">
+          <div class="section-marker"><span class="section-number">01 /</span><h2 id="impact-heading" class="eyebrow">SELECTED EXPERIENCE</h2></div>
+          <div class="impact-grid">{impact.map(item => <article><h3>{item.title}<span class="theme-dot">.</span></h3><p>{item.result}</p></article>)}</div>
+        </section>
 
         <section id="expertise" class="expertise section" aria-labelledby="expertise-heading">
-          <div class="section-marker"><span class="section-number">01 /</span><span class="eyebrow">MY APPROACH. YOUR ADVANTAGE.</span></div>
-          <div class="section-heading-row"><h2 id="expertise-heading">A stronger product<span class="theme-dot">.</span><br /><span class="muted">A stronger team<span class="theme-dot">.</span></span></h2></div>
+          <div class="section-marker approach-marker"><span class="section-number">02 /</span><span class="eyebrow">LEADERSHIP IN PRACTICE</span></div>
+          <div class="section-heading-row approach-heading"><h2 id="expertise-heading">My approach<span class="theme-dot">.</span></h2></div>
           <div class="expertise-grid">
             {expertise.map(item => <article id={item.id} class:list={['expertise-item', { 'ai-approach': item.id === 'ai' }]}><div class="expertise-top"><Icon name={item.icon} /><span>{item.number}</span></div><h3>{item.title.slice(0, -1)}<span class="theme-dot">.</span></h3><p>{item.text}</p><ul class="tags" aria-label={`${item.title} focus areas`}>{item.tags.map(tag => <li>{tag}</li>)}</ul></article>)}
           </div>
 
         </section>
 
-        <section id="impact" class="impact section" aria-labelledby="impact-heading">
-          <div class="section-marker"><span class="section-number">02 /</span><h2 id="impact-heading" class="eyebrow">WHAT THAT LOOKS LIKE IN PRACTICE</h2></div>
-          <div class="impact-grid">{impact.map(item => <article><h3>{item.title}<span class="theme-dot">.</span></h3><p>{item.result}</p></article>)}</div>
-        </section>
-
         <Technologies />
 
         <section id="contact" class="contact section" aria-labelledby="contact-heading">
           <div class="contact-orbit" aria-hidden="true"></div>
-          <div class="contact-content"><p class="eyebrow"><span class="status-dot"></span> ENGINEERING & TECHNOLOGY LEADERSHIP</p><h2 id="contact-heading">Bring me your<br />next challenge<span class="theme-dot">.</span></h2><div class="contact-bottom"><p class="opportunity-copy">{site.opportunities}</p><a class="button button-primary" href={cvHref} data-cv-request>Request my CV <span class="button-arrow"><Icon name="diagonal" /></span></a></div></div>
+          <div class="contact-content"><p class="eyebrow"><span class="status-dot"></span> ENGINEERING & TECHNOLOGY LEADERSHIP</p><h2 id="contact-heading">Let’s talk about<br />what’s next<span class="theme-dot">.</span></h2><div class="contact-bottom"><p class="opportunity-copy">{site.opportunities}</p><a class="button button-primary" href={cvHref} data-cv-request>Request my CV <span class="button-arrow"><Icon name="diagonal" /></span></a></div></div>
           <BrandMark class="contact-asterisk" />
         </section>
       </main>

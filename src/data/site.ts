@@ -2,11 +2,11 @@
 export const site = {
   name: 'Kristijan Lenković',
   careerStartYear: 2009,
-  role: 'Software Engineer & Engineering Leader',
+  role: 'Engineering & IT Leader',
   headline: ['I deliver software.', 'I grow teams.'],
-  introduction: 'You get software that reaches production, an engineering team that takes ownership, and a leader who makes technology work for your business.',
-  opportunities: 'Building a product, growing engineering, or taking your platform forward? Tell me what you need to achieve.',
-  description: 'Kristijan Lenković — software engineer and engineering leader helping businesses deliver dependable products, grow capable teams, and build secure cloud platforms.',
+  introduction: 'I lead engineering teams and IT operations, connecting business priorities with the people and technology that deliver them.',
+  opportunities: 'Head of Engineering, Head of IT, CTO, or a related leadership role. If you see a fit, let’s talk.',
+  description: 'Kristijan Lenković — engineering and IT leader, software engineer, and founder. Experience building departments, leading transformation, and securing software delivery.',
   formEndpoint: import.meta.env.PUBLIC_CONTACT_ENDPOINT || '',
   profiles: [
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/klenkovic/', icon: '/icons/linkedin.svg' },
@@ -14,13 +14,13 @@ export const site = {
   ],
 };
 export const impact = [
-  { title: 'An organization built to grow', result: 'Created a multidisciplinary engineering department and developed the leaders who helped it scale.' },
-  { title: 'A platform ready for change', result: 'Led engineering, product, and operations through a multi-year platform transformation.' },
-  { title: 'A more dependable way to ship', result: 'Established shared release practices and build verification across engineering.' },
+  { title: 'Company-wide change', result: 'Restructured a technology company’s business model and internal operations, with responsibility for both development delivery and IT.' },
+  { title: 'Cloud-native transformation', result: 'Led a cross-functional task force driving a multi-year move to cloud-native platforms.' },
+  { title: 'Trust built into delivery', result: 'Made signed, traceable software builds a company-wide standard and unified release practices across engineering.' },
 ] as const;
 export const expertise = [
-  { id: 'delivery', number: '01', icon: 'architecture', title: 'Turn plans into working software.', text: 'I turn business priorities into pragmatic architecture and working products, staying close to the code and accountable through delivery.', tags: ['Software architecture', 'Cloud platforms', 'Kubernetes (K8s)'] },
-  { id: 'leadership', number: '02', icon: 'people', title: 'Build a team that can lead.', text: 'I give engineers clear direction, develop future leaders, and build the structure your team needs to grow without losing ownership.', tags: ['Team design', 'Leadership & mentoring'] },
-  { id: 'platforms', number: '03', icon: 'shield', title: 'Move forward with confidence.', text: 'I build security and reliability into cloud platforms and delivery pipelines, so your team can release with confidence as the product grows.', tags: ['DevSecOps', 'CI/CD', 'Software supply-chain security'] },
+  { id: 'leadership', number: '01', icon: 'people', title: 'Give people ownership.', text: 'I develop leaders, make responsibilities clear, and give teams room to make decisions.', tags: ['Team design', 'Leadership & mentoring'] },
+  { id: 'delivery', number: '02', icon: 'architecture', title: 'Stay close to the work.', text: 'I connect strategy to architecture and delivery, staying technical enough to challenge assumptions and help solve difficult problems.', tags: ['Software architecture', 'Cloud platforms', 'Kubernetes (K8s)'] },
+  { id: 'platforms', number: '03', icon: 'shield', title: 'Make reliability a habit.', text: 'I bring development and operations together, making security and dependable releases part of everyday engineering.', tags: ['DevSecOps', 'CI/CD', 'Software supply-chain security'] },
   { id: 'ai', number: '04', icon: 'spark', title: 'AI, with judgment.', text: 'I use coding agents to explore, build, and learn. Architecture decisions, review, and accountability stay with people.', tags: ['AI-assisted engineering', 'Agentic workflows', 'Human review'] },
 ] as const;
