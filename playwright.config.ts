@@ -10,6 +10,9 @@ export default defineConfig({
     command: 'npm run build && npm run preview -- --ignore-lock --host 127.0.0.1 --port 4329',
     url: 'http://127.0.0.1:4329',
     reuseExistingServer: false,
+    timeout: 180_000,
+    stdout: 'pipe',
+    stderr: 'pipe',
     // Test-only identifier; Google requests are mocked in analytics tests.
     env: { PUBLIC_GA_MEASUREMENT_ID: 'G-TEST12345' },
   },
