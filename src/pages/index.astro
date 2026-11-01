@@ -34,11 +34,11 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
     <link rel="preload" as="image" type="image/avif" href={portraitPreload.src} imagesrcset={portraitPreload.srcSet.attribute} imagesizes={portraitSizes} fetchpriority="high" />
     {[manropeFont, manropeExtendedFont, bodyFont].map(font => <link rel="preload" as="font" type="font/woff2" href={font} crossorigin="anonymous" />)}
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={`${site.name} — ${site.role}`} />
+    <meta property="og:title" content={`${site.name} - ${site.role}`} />
     <meta property="og:description" content={site.description} />
     <meta property="og:url" content={Astro.site} />
     <meta property="og:image" content={new URL('/social-card.png', Astro.site)} />
-    <meta property="og:image:alt" content={`Portrait of ${site.name}, ${site.role} — ${site.headline.join(' ')}`} />
+    <meta property="og:image:alt" content={`Portrait of ${site.name}, ${site.role} - ${site.headline.join(' ')}`} />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')} />
     <meta property="og:locale" content="en_GB" />
@@ -46,7 +46,7 @@ const structuredData = { '@context': 'https://schema.org', '@type': 'ProfilePage
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <title>{site.name} — {site.role}</title>
+    <title>{site.name} - {site.role}</title>
     <script is:inline>
       (() => {
         document.documentElement.classList.add('js');

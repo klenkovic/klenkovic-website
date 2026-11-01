@@ -146,7 +146,7 @@ test('form requires a CAPTCHA token and reports real server outcomes', async ({ 
   await page.locator('[name="cf-turnstile-response"]').evaluate((input: HTMLInputElement) => { input.value = 'fresh-token'; });
   await page.route('https://contact.example.test/contact', route => route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
   await submit.click();
-  await expect(page.getByRole('status')).toHaveText('Request received. Thank you — I’ll reply personally with my CV.');
+  await expect(page.getByRole('status')).toHaveText('Request received. Thank you - I’ll reply personally with my CV.');
 });
 
 test('dialog traps keyboard focus and closes with Escape', async ({ page }) => {

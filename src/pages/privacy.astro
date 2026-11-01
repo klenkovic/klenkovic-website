@@ -5,7 +5,7 @@ import Analytics from '../components/Analytics.astro';
 const analyticsConfigured = /^G-[A-Z0-9]+$/.test(import.meta.env.PUBLIC_GA_MEASUREMENT_ID || '');
 ---
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Privacy Policy — Kristijan Lenković</title><meta name="description" content="How this website handles contact requests, optional analytics, and local preferences." /><link rel="canonical" href={new URL('/privacy/', Astro.site)} /><script is:inline>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Privacy Policy - Kristijan Lenković</title><meta name="description" content="How this website handles contact requests, optional analytics, and local preferences." /><link rel="canonical" href={new URL('/privacy/', Astro.site)} /><script is:inline>
   (() => { let theme; try { theme = localStorage.getItem('theme'); } catch {} document.documentElement.dataset.theme = theme === 'light' || theme === 'dark' ? theme : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'); })();
 </script></head>
 <body><main class="privacy-page"><a href="/">← Back to the website</a><h1>Privacy Policy</h1>

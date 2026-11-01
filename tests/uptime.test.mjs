@@ -4,7 +4,7 @@ import { checkSite } from '../scripts/check-uptime.mjs';
 
 const origin = 'https://kristijan.lenkovic.com';
 const pages = {
-  '/': ['text/html', '<title>Kristijan Lenković — Software Engineer & Engineering Leader</title>'],
+  '/': ['text/html', '<title>Kristijan Lenković - Software Engineer & Engineering Leader</title>'],
   '/privacy/': ['text/html', '<h1>Privacy</h1>'],
   '/favicon.svg': ['image/svg+xml', '<svg></svg>'],
   '/sitemap.xml': ['application/xml', `<loc>${origin}/</loc>`],

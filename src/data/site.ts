@@ -6,7 +6,7 @@ export const site = {
   headline: ['I deliver software.', 'I grow teams.'],
   introduction: 'I lead engineering teams and IT operations, connecting business priorities with the people and technology that deliver them.',
   opportunities: 'Head of Engineering, Head of IT, CTO, or a related leadership role. If you see a fit, let’s talk.',
-  description: 'Kristijan Lenković — engineering and IT leader, software engineer, and founder. Experience building departments, leading transformation, and securing software delivery.',
+  description: 'Kristijan Lenković - engineering and IT leader, software engineer, and founder. Experience building departments, leading transformation, and securing software delivery.',
   formEndpoint: import.meta.env.PUBLIC_CONTACT_ENDPOINT || '',
   turnstileSiteKey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '',
   profiles: [

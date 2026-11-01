@@ -72,7 +72,7 @@ try {
   await page.getByRole('textbox', { name: 'Your email' }).fill('test@example.test');
   // Minimal request: both company and message are optional.
   await page.getByRole('button', { name: 'Send request' }).click();
-  await expect(page.getByRole('status')).toHaveText('Request received. Thank you — I’ll reply personally with my CV.');
+  await expect(page.getByRole('status')).toHaveText('Request received. Thank you - I’ll reply personally with my CV.');
   assert.equal(deliveries.length, 1);
   assert.equal(verified, 1);
   assert.deepEqual(deliveries[0].to, ['owner@example.test']);

@@ -100,7 +100,7 @@ if (dialog && form) {
       }
       trackAnalyticsEvent('generate_lead');
       form.reset();
-      status.textContent = 'Request received. Thank you — I’ll reply personally with my CV.';
+      status.textContent = 'Request received. Thank you - I’ll reply personally with my CV.';
     } catch {
       status.textContent = 'Couldn’t confirm your request was sent. Please try again later or message me on LinkedIn.';
     } finally {
