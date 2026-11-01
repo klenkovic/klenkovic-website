@@ -1,6 +1,7 @@
 // Public profile only. The recipient address is configured only in the private contact service.
 export const site = {
   name: 'Kristijan Lenković',
+  careerStartYear: 2009,
   role: 'Software Engineer & Engineering Leader',
   headline: ['I deliver software.', 'I grow teams.'],
   introduction: 'You get software that reaches production, an engineering team that takes ownership, and a leader who makes technology work for your business.',

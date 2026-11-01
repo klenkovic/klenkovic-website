@@ -1,5 +1,30 @@
 import { trackAnalyticsEvent } from './analytics';
 
+// Refresh the build-time fallback when a static page is opened in a later year.
+function syncYearNumbers() {
+  const currentYear = new Date().getFullYear();
+  document.querySelectorAll<HTMLElement>('[data-current-year]').forEach(element => {
+    element.textContent = String(currentYear - Number(element.dataset.yearOffset ?? 0));
+  });
+}
+
+syncYearNumbers();
+window.addEventListener('pageshow', syncYearNumbers);
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) syncYearNumbers();
+});
+
+// Also handle a page left open across midnight on New Year's Eve.
+function scheduleYearRefresh() {
+  const now = new Date();
+  const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  window.setTimeout(() => {
+    syncYearNumbers();
+    scheduleYearRefresh();
+  }, nextMidnight.getTime() - now.getTime());
+}
+scheduleYearRefresh();
+
 const root = document.documentElement;
 const themeToggle = document.querySelector<HTMLButtonElement>('.theme-toggle');
 const systemTheme = window.matchMedia('(prefers-color-scheme: light)');
@@ -95,15 +120,5 @@ if (dialog && form) {
       form.querySelector('altcha-widget')?.reset();
       submit.disabled = false;
     }
-  });
-}
-
-// Enable the color reveal after decode. CSS smoothly follows hover/focus on desktop,
-// while touch devices reveal on entry. No animation-name changes or restart jumps.
-const portraitImage = document.querySelector<HTMLImageElement>('.portrait-frame > picture img');
-const portraitFrame = document.querySelector<HTMLElement>('.portrait-frame');
-if (portraitImage && portraitFrame) {
-  void portraitImage.decode().catch(() => {}).then(() => {
-    requestAnimationFrame(() => requestAnimationFrame(() => portraitFrame.classList.add('is-color-ready')));
   });
 }

@@ -441,3 +441,80 @@ altcha-widget { --altcha-color-base: var(--surface); --altcha-color-text: var(--
   .nav-label-full { display: none; }
   .nav-label-short { display: inline; }
 }
+
+/* Portrait and location */
+.portrait-composition { padding: 12px; }
+.portrait-visual { padding: 10px; border: 1px solid var(--line); border-radius: 50%; }
+.portrait-frame { aspect-ratio: 1; border-radius: 50%; border: 0; box-shadow: none; }
+.portrait-frame img { display: block; object-position: center 35%; }
+.portrait-name { margin-top: 18px; text-align: center; font-family: var(--font-display); font-size: clamp(1.125rem, 1rem + .4vw, 1.375rem); font-weight: 500; letter-spacing: -.025em; }
+.location-tag {
+  position: relative; top: auto; bottom: auto; left: auto; transform: none;
+  width: max-content; max-width: 100%; margin: 12px auto 0;
+  padding: 10px 16px; border-radius: 6px; box-shadow: none;
+}
+.location-tag svg { color: var(--accent); }
+:root[data-theme='light'] .location-tag svg { color: #a23848; }
+@media (max-width: 600px) {
+  .portrait-composition { padding: 0; margin-left: 0; display: flex; flex-direction: column; }
+  .portrait-visual { padding: 8px; }
+  .portrait-frame { aspect-ratio: 1; border-radius: 50%; }
+  .location-tag { position: relative; margin: 12px auto 0; }
+}
+
+/* The full stop carries the identity through the page. */
+.theme-dot { color: var(--accent); }
+:root[data-theme='light'] .theme-dot { color: #a23848; }
+.section-number::after { content: ''; display: inline-block; width: 6px; height: 6px; margin-left: 9px; border-radius: 50%; background: var(--accent); vertical-align: middle; }
+:root[data-theme='light'] .section-number::after { background: #a23848; }
+
+/* Connect the introduction to the work a visitor wants to explore. */
+.hero { padding-block: 56px 40px; row-gap: 36px; }
+.hero-pathways { grid-column: 1 / -1; display: grid; grid-template-columns: .85fr 1fr 1fr 1fr; align-items: center; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 22px 24px; gap: 22px; }
+.pathways-intro { font-family: var(--font-display); font-size: 1.125rem; font-weight: 500; line-height: 1.5; letter-spacing: -.02em; }
+.hero-pathways a { min-width: 0; display: flex; align-items: center; gap: 12px; border-left: 1px solid var(--line); padding: 12px 0 12px 22px; min-height: 76px; }
+.hero-pathways strong { display: block; font-size: 1rem; font-weight: 500; }
+.pathway-detail { display: block; color: var(--muted); font-size: .8125rem; margin-top: 5px; line-height: 1.5; }
+.pathway-dot { flex: 0 0 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); transition: transform .2s; }
+.hero-pathways a > svg { margin-left: auto; flex: 0 0 16px; width: 16px; height: 16px; color: var(--muted); transition: transform .2s, color .2s; }
+.hero-pathways a:hover > svg, .hero-pathways a:focus-visible > svg { transform: translate(2px, -2px); color: var(--text); }
+.hero-pathways a:hover .pathway-dot, .hero-pathways a:focus-visible .pathway-dot { transform: scale(1.5); }
+@media (max-width: 1000px) {
+  .hero-pathways { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .pathways-intro { grid-column: 1 / -1; }
+  .pathways-intro br { display: none; }
+  .hero-pathways a { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+}
+@media (max-width: 600px) {
+  .hero { padding-block: 38px; }
+  .hero-pathways { grid-template-columns: 1fr; gap: 8px; padding: 20px; }
+  .pathways-intro { margin-bottom: 8px; }
+  .hero-pathways a { min-height: 76px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-pathways a > svg, .pathway-dot { transition: none; }
+}
+
+/* A field of dots connects the two sides of the introduction. */
+.hero { position: relative; isolation: isolate; }
+.hero-atmosphere { position: absolute; z-index: -1; inset: 0 -80px 0; overflow: hidden; pointer-events: none; }
+.hero-atmosphere::before { content: ''; position: absolute; inset: -10%; background: radial-gradient(ellipse at 66% 46%, #f1838324, transparent 52%), radial-gradient(ellipse at 93% 18%, #9e8bdc1c, transparent 40%); animation: atmosphere-drift 18s ease-in-out infinite alternate; }
+.hero-dot-field { position: absolute; inset: 0; background-image: radial-gradient(circle, var(--subtle) 1px, transparent 1.5px); background-size: 24px 24px; opacity: .2; mask-image: radial-gradient(ellipse at 64% 49%, #000 5%, transparent 65%); }
+.hero-connections { position: absolute; inset: 0; width: 100%; height: calc(100% - 110px); color: var(--accent); }
+.connection-track { stroke: currentColor; stroke-width: 1; opacity: .16; }
+.connection-flow { stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1 230; opacity: .65; animation: connection-travel 28s linear infinite; }
+.connection-node { fill: var(--accent); stroke: var(--bg); stroke-width: 5; paint-order: stroke; }
+.connection-node-secondary { opacity: .65; }
+.hero-pathways { position: relative; background: color-mix(in srgb, var(--surface) 88%, transparent); }
+:root[data-theme='light'] .hero-atmosphere::before { background: radial-gradient(ellipse at 66% 46%, #f183832e, transparent 52%), radial-gradient(ellipse at 93% 18%, #9e8bdc20, transparent 40%); }
+:root[data-theme='light'] .hero-connections { color: #a23848; }
+@keyframes atmosphere-drift { from { transform: translate(-2%, 1%) scale(1); } to { transform: translate(3%, -2%) scale(1.08); } }
+@keyframes connection-travel { to { stroke-dashoffset: -924; } }
+@media (max-width: 600px) {
+  .hero-atmosphere { inset-inline: -24px; }
+  .hero-dot-field { background-size: 22px 22px; mask-image: radial-gradient(ellipse at 70% 42%, #000, transparent 65%); }
+  .hero-connections { height: 70%; opacity: .55; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-atmosphere::before, .connection-flow { animation: none; }
+}
