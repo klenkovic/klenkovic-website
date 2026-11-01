@@ -15,9 +15,9 @@ The portrait was supplied by Kristijan Lenković. This notice does not change it
 
 The GitHub and LinkedIn brand SVGs are from Font Awesome Free 6.7.2, Copyright 2024 Fonticons, Inc. SVG icon artwork is licensed under CC BY 4.0; its attribution comments are retained in the SVG files. The full distribution notice ships in [Font Awesome Free license](public/licenses/font-awesome-free-LICENSE.txt). Source: https://github.com/FortAwesome/Font-Awesome/tree/6.x/svgs/brands . License: https://fontawesome.com/license/free . No icon font is loaded. Brand names and marks remain trademarks of their respective owners; these links identify personal profiles and do not imply endorsement.
 
-## Self-hosted spam protection and mail delivery
+## Contact request services
 
-The browser widget uses ALTCHA 3.5.0, MIT-licensed; full notice is published at [ALTCHA MIT license](public/licenses/altcha-MIT.txt). Source: https://github.com/altcha-org/altcha . The separate contact service uses `altcha-lib` 2.8.0 (MIT) and Nodemailer 10.3.1 (MIT-0); their full notices are included in installed packages and in the Docker image. No paid CAPTCHA product or external CAPTCHA script is loaded.
+The form loads Cloudflare Turnstile only when the contact dialog opens. A Cloudflare Worker validates submissions and sends notifications using SMTP2GO's HTTPS API. Zoho hosts the receiving mailbox. These are hosted services subject to their providers' terms; no SMTP2GO SDK, CAPTCHA package, or mail server library is bundled. Credentials and mail addresses are configured privately in the Worker.
 
 ## Technology logos
 

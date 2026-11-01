@@ -1,9 +1,0 @@
-{
-  "name": "kristijan-contact-service",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "engines": { "node": ">=24" },
-  "scripts": { "start": "node --env-file-if-exists=.env server.mjs", "test": "node --test server.test.mjs" },
-  "dependencies": { "altcha-lib": "2.8.0", "nodemailer": "10.3.1" }
-}

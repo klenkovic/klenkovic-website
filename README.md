@@ -11,24 +11,20 @@ npx playwright install chromium
 npm test
 ```
 
-## Self-hosted contact service — required before launch
+## Contact Worker — configure before launch
 
-The form posts to your own Node.js service. ALTCHA's MIT-licensed widget and verification library supply local proof-of-work spam protection; Nodemailer delivers a plain-text request through your SMTP server. No subscription, hosted form provider, CAPTCHA account, paid ALTCHA Cloud/Sentinel product, or automatic CV delivery is involved.
+The on-site CV form posts to a Cloudflare Worker, uses Cloudflare Turnstile for spam protection, and sends one plain-text notification through the existing SMTP2GO account to the Zoho mailbox. GitHub Pages continues hosting the static site. No database, server, SMTP connection, or automatic CV delivery is required. Existing Zoho MX records are unaffected.
 
-See [contact-service/README.md](contact-service/README.md) for Docker/native deployment, private configuration, HTTPS reverse proxying, and SMTP setup. After hosting it, set `PUBLIC_CONTACT_ENDPOINT` to its public `/contact` URL in `.env` and in GitHub repository Actions variables. Rebuild the static site. Only this URL is public; your mailbox, SMTP credentials, and CAPTCHA signing key stay on the server.
-
-Until configured, the form remains disabled. Local hosting/SMTP still need to be available; free software does not include a free server or mail-delivery infrastructure. Requests are manually reviewed and answered. There is no public CV file.
-
-Verification:
+See [contact-worker/README.md](contact-worker/README.md) for private configuration, deployment, free-plan limits, real delivery verification, and rollback. Set both `PUBLIC_CONTACT_ENDPOINT` and `PUBLIC_TURNSTILE_SITE_KEY` locally and in GitHub Actions variables, then rebuild. The form stays disabled until both are configured, with LinkedIn available as a fallback. Do not put mail addresses or secret keys in public source or frontend environment variables.
 
 ```sh
-npm --prefix contact-service ci
-npm --prefix contact-service test
+npm run test:contact
+npm run contact:check
 npm run build
-node scripts/test-contact-flow.mjs
+npm run test:contact-flow
 ```
 
-The last command runs a real browser, real local proof-of-work challenge, and the actual HTTP handler using a mail stub. It sends no email. A real SMTP delivery test remains necessary after deployment.
+Tests mock Cloudflare verification and SMTP2GO delivery; they do not send mail or prove real inbox delivery. The browser flow uses the real Worker handler with those upstreams stubbed. A live delivery and Reply-To test remains required before enabling the form.
 
 ## Deploy
 
@@ -50,7 +46,7 @@ Analytics stays off until a valid `PUBLIC_GA_MEASUREMENT_ID` is configured. No G
 2. Choose a Web data stream with URL `https://kristijan.lenkovic.com` and copy its measurement ID (`G-…`). No API key or Google Tag Manager account is needed.
 3. **Turn off Enhanced Measurement** in the web stream settings. This implementation explicitly sends its own events and cleans page URLs. Automatic form interaction/page-history tracking is unnecessary and can create duplicate events or expose URL details. Keep Google Signals, ads linking, user-provided data collection, and advertising personalization off. Do not add another Analytics snippet through a plugin.
 4. Add `PUBLIC_GA_MEASUREMENT_ID=G-YOURID` to local `.env`, and add the same public identifier as a GitHub repository Actions variable. Rebuild and deploy. Do not use the test ID from the browser test configuration.
-5. Open the live site, accept analytics, and check GA4 Realtime for `page_view`. Open the CV dialog for `cv_request_open`. Submit a valid request after the self-hosted contact service is configured for `generate_lead`. Mark `generate_lead` as a **key event** in GA4; a form open is intent, not a completed lead.
+5. Open the live site, accept analytics, and check GA4 Realtime for `page_view`. Open the CV dialog for `cv_request_open`. Submit a valid request after the contact Worker is configured for `generate_lead`. Mark `generate_lead` as a **key event** in GA4; a form open is intent, not a completed lead.
 6. Verify that declining loads no Google tag and that withdrawing consent stops subsequent collection. Browser tests mock Google: receipt by your real GA property still needs this live check. Review the privacy page and choose the appropriate data retention settings before launch.
 
 No form fields or message text are passed to analytics. The URL passed to GA omits query strings/fragments, and the referrer is reduced to its origin. This intentionally sacrifices query-based campaign attribution, including UTM parameters, to avoid accidental personal data collection. Reports cover consenting visitors only; blockers also affect totals. Analytics does not increase search rankings.

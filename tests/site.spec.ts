@@ -111,11 +111,11 @@ test('system theme changes are followed until a preference is saved', async ({ p
 
 test('contact hides the recipient and cannot submit before setup', async ({ page }) => {
   await page.goto('/');
-  expect(await page.content()).not.toContain('kristijan@lenkovic.com');
+  expect(await page.content()).not.toMatch(/[A-Z0-9._%+-]+@lenkovic\.com/i);
   expect(await page.locator('a[href^="mailto:"]').count()).toBe(0);
   await page.getByRole('link', { name: 'Request my CV' }).first().click();
   await expect(page.getByRole('button', { name: 'Send request' })).toBeDisabled();
-  await expect(page.getByRole('status')).toHaveText('Contact form coming soon.');
+  await expect(page.getByRole('status')).toHaveText('The form is temporarily unavailable. Please contact me on LinkedIn.');
 });
 
 test('form requires a CAPTCHA token and reports real server outcomes', async ({ page }) => {
@@ -123,7 +123,7 @@ test('form requires a CAPTCHA token and reports real server outcomes', async ({ 
   await page.getByRole('link', { name: 'Request my CV' }).first().click();
   await page.getByRole('textbox', { name: 'Your name' }).fill('Alex Morgan');
   await page.getByRole('textbox', { name: 'Your email' }).fill('alex@example.com');
-  await page.getByRole('textbox', { name: 'Opportunity' }).fill('Engineering leadership role');
+  await page.getByRole('textbox', { name: 'Message (optional)' }).fill('Engineering leadership role');
   // Mock configuration and server responses; no requests are delivered externally.
   await page.evaluate(() => {
     const form = document.querySelector<HTMLFormElement>('#cv-form')!;
@@ -136,16 +136,17 @@ test('form requires a CAPTCHA token and reports real server outcomes', async ({ 
   await expect(page.getByRole('status')).toHaveText('Please complete the spam check first.');
   await page.evaluate(() => {
     const input = document.createElement('input');
-    input.type = 'hidden'; input.name = 'altcha'; input.value = 'mock-token';
+    input.type = 'hidden'; input.name = 'cf-turnstile-response'; input.value = 'mock-token';
     document.querySelector('#cv-form')!.append(input);
   });
   await page.route('https://contact.example.test/contact', route => route.fulfill({ status: 400, body: '{}' }));
   await submit.click();
-  await expect(page.getByRole('status')).toHaveText('Couldn’t send your request. Please try again.');
+  await expect(page.getByRole('status')).toHaveText('Couldn’t confirm your request was sent. Please try again later or message me on LinkedIn.');
   await expect(page.getByRole('textbox', { name: 'Your name' })).toHaveValue('Alex Morgan');
+  await page.locator('[name="cf-turnstile-response"]').evaluate((input: HTMLInputElement) => { input.value = 'fresh-token'; });
   await page.route('https://contact.example.test/contact', route => route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
   await submit.click();
-  await expect(page.getByRole('status')).toHaveText('Request received. Thank you — I’ll be in touch.');
+  await expect(page.getByRole('status')).toHaveText('Request received. Thank you — I’ll reply personally with my CV.');
 });
 
 test('dialog traps keyboard focus and closes with Escape', async ({ page }) => {

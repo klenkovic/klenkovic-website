@@ -16,13 +16,15 @@
     "audit:performance": "node scripts/performance.mjs",
     "monitor:uptime": "node scripts/check-uptime.mjs",
     "test:uptime": "node --test tests/uptime.test.mjs",
-    "test:contact": "npm --prefix contact-service test",
-    "test:contact-flow": "node scripts/test-contact-flow.mjs"
+    "test:contact": "node --test contact-worker/worker.test.mjs",
+    "test:contact-flow": "node scripts/test-contact-flow.mjs",
+    "contact:check": "wrangler deploy --dry-run --config contact-worker/wrangler.jsonc",
+    "contact:dev": "wrangler dev --config contact-worker/wrangler.jsonc",
+    "contact:deploy": "wrangler deploy --config contact-worker/wrangler.jsonc"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "5.3.0",
     "@fontsource-variable/manrope": "5.3.0",
-    "altcha": "3.5.0",
     "astro": "7.4.4"
   },
   "devDependencies": {
@@ -33,6 +35,7 @@
     "chrome-launcher": "1.2.2",
     "lighthouse": "13.5.0",
     "sharp": "0.35.5",
-    "typescript": "~5.9.3"
+    "typescript": "~5.9.3",
+    "wrangler": "4.156.0"
   }
 }

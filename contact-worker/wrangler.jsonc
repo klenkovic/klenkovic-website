@@ -1,0 +1,15 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "klenkovic-contact",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "contact.kristijan.lenkovic.com", "custom_domain": true, "zone_name": "lenkovic.com" }],
+  "observability": { "enabled": false },
+  "vars": { "SITE_ORIGIN": "https://kristijan.lenkovic.com" },
+  "ratelimits": [
+    { "name": "REQUEST_LIMITER", "namespace_id": "172901", "simple": { "limit": 5, "period": 60 } },
+    { "name": "SEND_LIMITER", "namespace_id": "172902", "simple": { "limit": 3, "period": 60 } }
+  ]
+}

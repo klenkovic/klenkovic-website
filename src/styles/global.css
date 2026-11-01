@@ -192,6 +192,7 @@
   textarea { resize: vertical; }
   #cv-form .button { width: 100%; min-height: 46px; margin-top: 2px; }
   .form-note { margin-top: 13px; font-size: var(--text-small); color: var(--muted); line-height: 1.7; }
+  #cv-dialog .form-note a { text-decoration: underline; text-underline-offset: 3px; }
 }
 
 @layer responsive {
@@ -409,7 +410,6 @@ button:disabled { cursor: not-allowed; opacity: .65; }
 .header-profiles a:hover { border-color: var(--accent); background: var(--surface); }
 .header-profiles img { width: 22px; height: 22px; filter: invert(1); }
 :root[data-theme='light'] .header-profiles img { filter: none; }
-altcha-widget { --altcha-color-base: var(--surface); --altcha-color-text: var(--text); --altcha-color-border: var(--line); --altcha-border-radius: 6px; }
 @media (max-width: 600px) { .site-header nav { gap: 8px; } .site-header .header-contact { display: none; } .header-profiles { gap: 6px; } .theme-toggle { width: 40px; height: 40px; } }
 
 /* Keep section navigation visible at every size, alongside the personal links. */

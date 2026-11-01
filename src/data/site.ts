@@ -1,4 +1,4 @@
-// Public profile only. The recipient address is configured only in the private contact service.
+// Public profile only. The recipient address is configured only in the private Worker.
 export const site = {
   name: 'Kristijan Lenković',
   careerStartYear: 2009,
@@ -8,6 +8,7 @@ export const site = {
   opportunities: 'Head of Engineering, Head of IT, CTO, or a related leadership role. If you see a fit, let’s talk.',
   description: 'Kristijan Lenković — engineering and IT leader, software engineer, and founder. Experience building departments, leading transformation, and securing software delivery.',
   formEndpoint: import.meta.env.PUBLIC_CONTACT_ENDPOINT || '',
+  turnstileSiteKey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '',
   profiles: [
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/klenkovic/', icon: '/icons/linkedin.svg' },
     { label: 'GitHub', url: 'https://github.com/klenkovic', icon: '/icons/github.svg' },

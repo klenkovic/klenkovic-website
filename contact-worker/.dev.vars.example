@@ -1,0 +1,6 @@
+# Copy to .dev.vars for local development; never commit the actual values.
+SITE_ORIGIN=http://127.0.0.1:4329
+SMTP2GO_API_KEY=
+TURNSTILE_SECRET_KEY=
+MAIL_FROM=
+CONTACT_RECIPIENT=
